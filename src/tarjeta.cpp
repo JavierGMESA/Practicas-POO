@@ -56,6 +56,8 @@ bool operator<(const Numero& num1, const Numero& num2)
     return num1.numero_ < num2.numero_;
 }
 
+std::set<Numero> Tarjeta::tarjetas{};
+
 Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num}, titular_{&us}, caduca_{fech}, activa_{true}
 {
     if(caduca_ < Fecha())

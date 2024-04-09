@@ -31,14 +31,41 @@ void pruebaArticulo()
     }
     try
     {
+        std::cout << "Va a crear el objeto" << std::endl;
         Clave c("Juanito");
         std::cout << c.clave() << std::endl;
-
+        if(c.verifica("Juanit"))
+        {
+            std::cout << "Es igual" << std::endl;
+        }
+        else
+        {
+            std::cout << "No es igual" << std::endl;
+        }
     }
     catch(Clave::Incorrecta& c)
     {
         std::cerr << c.razon() << std::endl;
     }
+    try
+    {
+        Numero n1{"298907654329043"};
+        std::cout << n1 << std::endl;
+        Numero n2{"398907654329043"};
+        if(n1 < n2)
+        {
+            std::cout << "Menor" << std::endl;
+        }
+        else
+        {
+            std::cout << "Mayor o igual" << std::endl;
+        }
+    }
+    catch(Numero::Incorrecto& n)
+    {
+        std::cerr << n.razon() << std::endl;
+    }
+    
 }
 
 
