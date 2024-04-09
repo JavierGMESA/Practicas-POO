@@ -47,7 +47,7 @@ bool Clave::verifica(const char* passwd) const
 
 Usuario::Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  const Cadena& direccion, const char* passwd): id_{id}, nombre_{nom}, apellidos_{apell}, direccion_{direccion}, passwd_{passwd}
 {
-    std::pair <tipolt, bool> res = ids.insert(id); //comprobar si el id está en el conjunto
+    std::pair <tipolt, bool> res = Usuario::ids.insert(id); //comprobar si el id está en el conjunto
     if(!(res.second))
     {
         throw Usuario::Id_duplicado(id_);

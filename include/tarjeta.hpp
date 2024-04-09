@@ -2,11 +2,11 @@
 #define TARJETA_HPP_
 #include "cadena.hpp"
 #include "fecha.hpp"
-#include "usuario.hpp"
+//#include "usuario.hpp"
 #include <set>
 #include <iostream>
 
-
+class Usuario;
 class Numero
 {
 public:

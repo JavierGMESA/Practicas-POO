@@ -1,15 +1,17 @@
 #ifndef USUARIO_HPP_
 #define USUARIO_HPP_
+//#include "tarjeta.hpp"
 #include "cadena.hpp"
-#include "articulo.hpp"
-#include "tarjeta.hpp"
+//#include "articulo.hpp"
 #include <algorithm>
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
 #include <map>
 
-
+class Numero;
+class Tarjeta;
+class Articulo;
 class Clave
 {
 public:
