@@ -3,6 +3,8 @@
 #include "fecha.hpp"
 #include "cadena.hpp"
 #include "articulo.hpp"
+#include "usuario.hpp"
+#include "tarjeta.hpp"
 
 void pruebaFechaCadena();
 void pruebaArticulo();
@@ -26,6 +28,16 @@ void pruebaArticulo()
     catch(...)
     {
         std::cerr << "Ha habido una excepcion" << '\n';
+    }
+    try
+    {
+        Clave c("Juanito");
+        std::cout << c.clave() << std::endl;
+
+    }
+    catch(Clave::Incorrecta& c)
+    {
+        std::cerr << c.razon() << std::endl;
     }
 }
 

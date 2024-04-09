@@ -125,7 +125,7 @@ Tarjeta::~Tarjeta()
     }
 }
 
-std::ostream& operator <<(std::ostream& os, Tarjeta::Tipo t);
+std::ostream& operator <<(std::ostream& os, Tarjeta::Tipo t)
 {
     if(t == Tarjeta::AmericanExpress)
     {

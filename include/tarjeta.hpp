@@ -6,6 +6,7 @@
 #include <set>
 #include <iostream>
 
+
 class Numero
 {
 public:

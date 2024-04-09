@@ -1,14 +1,15 @@
 #ifndef USUARIO_HPP_
 #define USUARIO_HPP_
 #include "cadena.hpp"
+#include "articulo.hpp"
+#include "tarjeta.hpp"
 #include <algorithm>
 #include <iostream>
 #include <unordered_set>
 #include <unordered_map>
-#include "tarjeta.hpp"
+#include <map>
 
 
-class Articulo;
 class Clave
 {
 public:
@@ -22,18 +23,20 @@ public:
     private:
         Razon reason;
     };
-    Clave(const char* passwd); //QUEDA POR IMPLEMENTAR
-    const Cadena& clave() const;  //QUEDA POR IMPLEMENTAR
-    bool verifica(const char* passwd) const;  //QUEDA POR IMPLEMENTAR
+    Clave(const char* passwd);
+    const Cadena& clave() const {return clave_;};
+    bool verifica(const char* passwd) const;
 private:
     Cadena clave_;
+    char encriptacion_[3];
+    static Cadena caracteres;
 };
 
 
 class Usuario
 {
 public:
-    typedef std::unordered_map<Numero, Tarjeta*> Tarjetas;
+    typedef std::map<Numero, Tarjeta*> Tarjetas;
     typedef std::unordered_map<Articulo*, unsigned int> Articulos;
 
     class Id_duplicado
@@ -56,7 +59,7 @@ public:
 
     void es_titular_de(Tarjeta* tar);
     void no_es_titular_de(Tarjeta* tar);
-    void compra(const Articulo& art, unsigned ctd); //QUEDA POR IMPLEMENTAR
+    void compra(Articulo& art, unsigned ctd); //QUEDA POR IMPLEMENTAR
     void vaciar_carro() {Articulos_.clear();}
     unsigned n_articulos() const {return Articulos_.size();}
 
