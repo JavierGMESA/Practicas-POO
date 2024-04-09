@@ -10,7 +10,7 @@ void pruebaFechaCadena();
 void pruebaArticulo();
 void pruebaClave();
 void pruebaNumero();
-void pruebaUsuario();
+void pruebaUsuarioTarjeta();
 
 int main()
 {
@@ -18,7 +18,7 @@ int main()
     //pruebaArticulo();
     //pruebaClave();
     //pruebaNumero();
-    pruebaUsuario();
+    pruebaUsuarioTarjeta();
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }
@@ -81,20 +81,45 @@ void pruebaNumero()
     }
 }
 
-void pruebaUsuario()
+void pruebaUsuarioTarjeta()
 {
     try
     {
         Usuario us1{"TheFox102", "Javier", "Mesa", "Calle Montevideo", "Juanito"};
         std::cout << us1.id() << ' ' << us1.nombre() << ' ' << us1.apellidos() << ' ' << us1.direccion() << std::endl;
+        Articulo a1("JJ", "Alfajor", "15/8/2023", 99.19, 100);
+        Articulo a2("Jg", "Camas de seda", "17/8/2023", 99.19, 90);
+        us1.compra(a1, 7);
+        us1.compra(a2, 10);
+        //us1.vaciar_carro();
+        Usuario::Articulos::const_iterator i;
+        for(i = us1.compra().begin(); i != us1.compra().end(); ++i)
+        {
+            std::cout << *(i->first) << std::endl;
+        }
+        std::cout << us1.n_articulos() << std::endl;
+        std::cout << us1 << std::endl; 
+
+        Tarjeta tar1{Numero{"298907654329017"}, us1, Fecha{"0/0/0"}};
+        std::cout << us1 << std::endl;
+        std::cout << tar1.numero() << ' ' << tar1.titular() << ' ' << tar1.caducidad() << ' ' << tar1.tipo() << ' ';
+        if(tar1.activa())
+        {
+            std::cout << "Activa" << std::endl;
+        }
+        else
+        {
+            std::cout << "Desactivada" << std::endl;
+        }
+        //Usuario us2{"TheFox102", "Javi", "Garcia", "Calle Montevideo", "JuanitoBaker"}; //Genera una excepción (mismo id que otro que ya estaba)
+
     }
     catch(Usuario::Id_duplicado& i)
     {
-        std::cerr << i.idd() << std::endl;
+        std::cerr << "El id ya estaba: " << i.idd() << std::endl;
     }
     
 }
-
 
 
 void pruebaFechaCadena()

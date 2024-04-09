@@ -74,7 +74,7 @@ public:
 
 private:
     typedef std::unordered_set<Cadena>::iterator tipolt;
-    Cadena id_, nombre_, apellidos_, direccion_;
+    const Cadena id_, nombre_, apellidos_, direccion_;
     Clave passwd_;
     Tarjetas Tarjetas_;
     Articulos Articulos_;

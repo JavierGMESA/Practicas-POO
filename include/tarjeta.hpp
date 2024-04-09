@@ -75,7 +75,7 @@ public:
     ~Tarjeta();
 private:
     const Numero numero_;
-    Usuario* titular_;
+    Usuario* titular_; //La práctica pide que el puntero sea const Usuario*, sin embargo, al hacerlo no se puede llamar al método es_titular_de() de Usuario por ejemplo
     const Fecha caduca_;
     bool activa_;
 
@@ -84,7 +84,7 @@ private:
     void anula_titular();
 };
 
-std::ostream& operator <<(std::ostream& os, Tarjeta::Tipo t);
+std::ostream& operator<<(std::ostream& os, Tarjeta::Tipo t);
 
 std::ostream& operator<<(std::ostream& os, const Tarjeta& tar);
 

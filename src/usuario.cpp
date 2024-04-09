@@ -84,12 +84,12 @@ void Usuario::compra(Articulo& art, unsigned ctd)
 
 std::ostream& operator <<(std::ostream& os, const Usuario& us)
 {
-    os << us.id_ << "[ " << us.passwd_.clave() << "] " << us.nombre_ << ' ' << us.apellidos_ << std::endl;
+    os << us.id_ << "[" << us.passwd_.clave() << "] " << us.nombre_ << ' ' << us.apellidos_ << std::endl;
     os << us.direccion_ << std::endl << "Tarjetas:" << std::endl;;
     Usuario::Tarjetas::const_iterator is; 
-    for(is = us.Tarjetas_.begin(); is != us.Tarjetas_.end(); ++ is) // Por que?
+    for(is = us.Tarjetas_.begin(); is != us.Tarjetas_.end(); ++ is)
     {
-        os << is->second << std::endl << std::endl << std::endl;
+        os << std::endl << *(is->second);
     }
     return os;
 }
