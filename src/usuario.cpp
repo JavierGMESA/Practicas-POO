@@ -56,20 +56,20 @@ Usuario::Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  cons
     }
 }
 
-void Usuario::es_titular_de(Tarjeta* tar)
+void Usuario::es_titular_de(Tarjeta& tar)
 {
-    if(!Tarjetas_.count(tar->numero_))
+    if(!Tarjetas_.count(tar.numero_))
     {
-        Tarjetas_[tar->numero_] = tar;
+        Tarjetas_[tar.numero_] = &tar;
     }
-    tar->titular_ = this;
+    tar.titular_ = this;
 }
 
-void Usuario::no_es_titular_de(Tarjeta* tar)
+void Usuario::no_es_titular_de(Tarjeta& tar)
 {
-    if(Tarjetas_.count(tar->numero_))
+    if(Tarjetas_.count(tar.numero_))
     {
-        Tarjetas_.erase(tar->numero_);
+        Tarjetas_.erase(tar.numero_);
     }
 }
 
@@ -106,7 +106,7 @@ void mostrar_carro(std::ostream& os, const Usuario& us)
     Usuario::Articulos::const_iterator is;
     for(is = us.compra().begin(); is != us.compra().end(); ++is) // Por que?
     {
-        os << "   " << is->first << "   " << is->second << std::endl;
+        os << "   " << is->second << "   " << *(is->first) << std::endl;
     }
 }
 

@@ -13,7 +13,7 @@ Numero::Numero(const Cadena& num): numero_{num}
     for(i = 0; i < numero_.length(); ++i)
     while(i < numero_.length() && numerico)
     {
-        if(!std::isdigit(numero_[i]))
+        if(!std::isdigit(numero_[i]) && numero_[i] != ' ')
         {
             numerico = false;
         }
@@ -27,8 +27,7 @@ Numero::Numero(const Cadena& num): numero_{num}
             ++i;
         }   
     }
-
-    //std::cout << correct_n << std::endl;
+    correct_n[j] = '\0';
 
     numero_ = Cadena(correct_n);
     if(!numerico)
@@ -46,8 +45,6 @@ Numero::Numero(const Cadena& num): numero_{num}
         numero_ = Cadena("");
         throw Numero::Incorrecto(NO_VALIDO);
     }
-
-    //std::cout << numero_ << std::endl;
 }
 
 Numero::operator const char*() const
@@ -64,7 +61,7 @@ std::set<Numero> Tarjeta::tarjetas{};
 
 Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num}, titular_{&us}, caduca_{fech}, activa_{true}
 {
-    if(caduca_ < Fecha())
+    if(caduca_ < Fecha("0/0/0"))
     {
         throw Tarjeta::Caducada(caduca_);
     }
@@ -72,7 +69,7 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num
     {
         throw Tarjeta::Num_duplicado(num);
     }
-    us.es_titular_de(this);
+    us.es_titular_de(*this);
 }
 
 Tarjeta::Tipo Tarjeta::tipo() const
@@ -126,7 +123,7 @@ Tarjeta::~Tarjeta()
 {
     if(titular_ != nullptr)
     {
-        const_cast<Usuario *>(titular_)->no_es_titular_de(this);
+        const_cast<Usuario *>(titular_)->no_es_titular_de(*this);
     }
 }
 

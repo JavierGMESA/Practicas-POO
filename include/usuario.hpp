@@ -59,9 +59,9 @@ public:
     const Tarjetas& tarjetas() const {return Tarjetas_;}
     const Articulos& compra() const {return Articulos_;}
 
-    void es_titular_de(Tarjeta* tar);
-    void no_es_titular_de(Tarjeta* tar);
-    void compra(Articulo& art, unsigned ctd);
+    void es_titular_de(Tarjeta& tar);
+    void no_es_titular_de(Tarjeta& tar);
+    void compra(Articulo& art, unsigned ctd = 1);
     void vaciar_carro() {Articulos_.clear();}
     unsigned n_articulos() const {return Articulos_.size();}
 

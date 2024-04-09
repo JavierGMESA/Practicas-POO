@@ -14,11 +14,11 @@ void pruebaUsuarioTarjeta();
 
 int main()
 {
-    //pruebaFechaCadena();
+    pruebaFechaCadena();
     //pruebaArticulo();
     //pruebaClave();
     //pruebaNumero();
-    pruebaUsuarioTarjeta();
+    //pruebaUsuarioTarjeta();
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }
@@ -74,6 +74,8 @@ void pruebaNumero()
         {
             std::cout << "Mayor o igual" << std::endl;
         }
+        Numero n3{"4539 4512 0398 7356"};
+        std::cout << n3 << std::endl;
     }
     catch(Numero::Incorrecto& n)
     {
@@ -215,6 +217,16 @@ void pruebaFechaCadena()
     }
     catch(Fecha::Invalida& e)
     {
-        std::cout << e.por_que() << std::endl;
+        std::cerr << e.por_que() << std::endl;
     }
+    try
+    {
+        Fecha f8{"1/2/2001"};
+        std::cout << std::endl << f8 << std::endl;
+    }
+    catch(Fecha::Invalida &e)
+    {
+        std::cerr << e.por_que() << '\n';
+    }
+    
 }

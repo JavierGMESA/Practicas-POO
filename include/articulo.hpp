@@ -14,8 +14,8 @@ public:
     const Fecha& f_publi() const {return f_publi_;}
     float precio() const {return precio_;}
     float& precio() {return precio_;}
-    unsigned stock() {return stock_;}
-    unsigned& sotck() {return stock_;}
+    unsigned stock() const {return stock_;}
+    unsigned& stock() {return stock_;}
 private:
     const Cadena referencia_, titulo_;
     const Fecha f_publi_;

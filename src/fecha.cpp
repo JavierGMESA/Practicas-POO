@@ -62,7 +62,7 @@ Fecha::Fecha(const char *cad): Dia(-1), Mes(-1), Anno(-1)
 bool Fecha::comprobarFecha(const unsigned& diaM) const
 {
     bool valida = false;
-    if(Anno < Fecha::AnnoMaximo && Anno > Fecha::AnnoMinimo)
+    if(Anno <= Fecha::AnnoMaximo && Anno >= Fecha::AnnoMinimo)
     {
         if(Mes <= 12 && Mes > 0)
         {
