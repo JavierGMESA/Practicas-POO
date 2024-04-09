@@ -137,29 +137,7 @@ Cadena operator+(const Cadena& cade1, const Cadena& cade2)
 
 bool operator<(const Cadena& cade1, const Cadena& cade2)
 {
-    bool res = true;
-    int tama;
-    int i = 0;
-    const char *cad1, *cad2;
-    if(cade1.length() > cade2.length())
-    {
-        tama = cade2.length();
-    }
-    else
-    {
-        tama = cade1.length();
-    }
-    cad1 = (const char *)(cade1);
-    cad2 = (const char *)(cade2);
-    while(i < tama && res)
-    {
-        if(cad1[i] - '0' >= cad2[i] - '0')
-        {
-            res = false;
-        }
-        ++i;
-    }
-    return res;
+    return std::strcmp((const char*)(cade1), (const char*)(cade2)) < 0;
 }
 
 bool operator==(const Cadena& cade1, const Cadena& cade2)

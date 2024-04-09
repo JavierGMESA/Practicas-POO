@@ -61,11 +61,11 @@ public:
 
     void es_titular_de(Tarjeta* tar);
     void no_es_titular_de(Tarjeta* tar);
-    void compra(Articulo& art, unsigned ctd); //QUEDA POR IMPLEMENTAR
+    void compra(Articulo& art, unsigned ctd);
     void vaciar_carro() {Articulos_.clear();}
     unsigned n_articulos() const {return Articulos_.size();}
 
-    friend std::ostream& operator <<(std::ostream& os, const Usuario& us); //QUEDA POR IMPLEMENTAR
+    friend std::ostream& operator <<(std::ostream& os, const Usuario& us);
 
     Usuario(const Usuario&) = delete;
     Usuario& operator=(const Usuario&) = delete;

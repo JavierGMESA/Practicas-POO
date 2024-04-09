@@ -8,11 +8,17 @@
 
 void pruebaFechaCadena();
 void pruebaArticulo();
+void pruebaClave();
+void pruebaNumero();
+void pruebaUsuario();
 
 int main()
 {
     //pruebaFechaCadena();
-    pruebaArticulo();
+    //pruebaArticulo();
+    //pruebaClave();
+    //pruebaNumero();
+    pruebaUsuario();
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }
@@ -29,6 +35,10 @@ void pruebaArticulo()
     {
         std::cerr << "Ha habido una excepcion" << '\n';
     }
+}
+
+void pruebaClave()
+{
     try
     {
         std::cout << "Va a crear el objeto" << std::endl;
@@ -47,11 +57,15 @@ void pruebaArticulo()
     {
         std::cerr << c.razon() << std::endl;
     }
+}
+
+void pruebaNumero()
+{
     try
     {
-        Numero n1{"298907654329043"};
+        Numero n1{"298907654329017"};
         std::cout << n1 << std::endl;
-        Numero n2{"398907654329043"};
+        Numero n2{"298907654321097"};
         if(n1 < n2)
         {
             std::cout << "Menor" << std::endl;
@@ -63,7 +77,20 @@ void pruebaArticulo()
     }
     catch(Numero::Incorrecto& n)
     {
-        std::cerr << n.razon() << std::endl;
+        std::cerr << "Ha habido una excepción:" << n.razon() << std::endl;
+    }
+}
+
+void pruebaUsuario()
+{
+    try
+    {
+        Usuario us1{"TheFox102", "Javier", "Mesa", "Calle Montevideo", "Juanito"};
+        std::cout << us1.id() << ' ' << us1.nombre() << ' ' << us1.apellidos() << ' ' << us1.direccion() << std::endl;
+    }
+    catch(Usuario::Id_duplicado& i)
+    {
+        std::cerr << i.idd() << std::endl;
     }
     
 }
@@ -100,20 +127,22 @@ void pruebaFechaCadena()
 
     std::cout << cad1.length() << ' ' << cad3.length() << std::endl;
     std::cout << cad1 + cad3 << std::endl;
-    cad1 += cad3;
+    //cad1 += cad3;
     std::cout << cad1 << std::endl;
     cad2 = cad1;
     std::cout << cad2 << std::endl;
 
     //std::cout << "cad2 cortada queda: " << cad2.substr(0, 5) << std::endl;
 
-    if(cad1 >= cad3)
+    std::cout << cad1 << ' ' << cad3 << std::endl;
+
+    if(cad3 >= cad1)
     {
-        std::cout << "cad1 es mayor o igual que cad3" << std::endl;
+        std::cout << "mayor o igual" << std::endl;
     }
     else
     {
-        std::cout << "cad1 es menor que cad3" << std::endl;
+        std::cout << "menor que" << std::endl;
     }
     if(cad3 == " Buenas Juan")
     {

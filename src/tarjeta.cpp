@@ -25,9 +25,11 @@ Numero::Numero(const Cadena& num): numero_{num}
                 ++j;
             }
             ++i;
-        }
-        
+        }   
     }
+
+    //std::cout << correct_n << std::endl;
+
     numero_ = Cadena(correct_n);
     if(!numerico)
     {
@@ -44,6 +46,8 @@ Numero::Numero(const Cadena& num): numero_{num}
         numero_ = Cadena("");
         throw Numero::Incorrecto(NO_VALIDO);
     }
+
+    //std::cout << numero_ << std::endl;
 }
 
 Numero::operator const char*() const
@@ -69,7 +73,6 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num
         throw Tarjeta::Num_duplicado(num);
     }
     titular_->es_titular_de(this);
-    
 }
 
 Tarjeta::Tipo Tarjeta::tipo() const

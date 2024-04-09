@@ -62,6 +62,7 @@ void Usuario::es_titular_de(Tarjeta* tar)
     {
         Tarjetas_[tar->numero_] = tar;
     }
+    tar->titular_ = this;
 }
 
 void Usuario::no_es_titular_de(Tarjeta* tar)
