@@ -101,7 +101,7 @@ void pruebaUsuarioTarjeta()
         std::cout << us1 << std::endl; 
 
         Tarjeta tar1{Numero{"298907654329017"}, us1, Fecha{"0/0/0"}};
-        std::cout << us1 << std::endl;
+        std::cout << "El usuario es:" << std::endl << us1 << std::endl;
         std::cout << tar1.numero() << ' ' << tar1.titular() << ' ' << tar1.caducidad() << ' ' << tar1.tipo() << ' ';
         if(tar1.activa())
         {
@@ -111,8 +111,10 @@ void pruebaUsuarioTarjeta()
         {
             std::cout << "Desactivada" << std::endl;
         }
+        std::cout << std::endl;
         //Usuario us2{"TheFox102", "Javi", "Garcia", "Calle Montevideo", "JuanitoBaker"}; //Genera una excepción (mismo id que otro que ya estaba)
-
+        tar1.~Tarjeta();
+        std::cout << us1;
     }
     catch(Usuario::Id_duplicado& i)
     {

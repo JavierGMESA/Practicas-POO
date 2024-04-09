@@ -72,7 +72,7 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num
     {
         throw Tarjeta::Num_duplicado(num);
     }
-    titular_->es_titular_de(this);
+    us.es_titular_de(this);
 }
 
 Tarjeta::Tipo Tarjeta::tipo() const
@@ -126,7 +126,7 @@ Tarjeta::~Tarjeta()
 {
     if(titular_ != nullptr)
     {
-        titular_->no_es_titular_de(this);
+        const_cast<Usuario *>(titular_)->no_es_titular_de(this);
     }
 }
 
@@ -198,7 +198,7 @@ std::ostream& operator<<(std::ostream& os, const Tarjeta& tar)
     {
         os << std::to_string(tar.caducidad().mes());
     }
-    os << '/' << tar.caducidad().anno() % 100 << std::endl;
+    os << '/' << tar.caducidad().anno() % 100;
     return os;
 }
 

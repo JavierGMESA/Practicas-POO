@@ -75,7 +75,7 @@ public:
     ~Tarjeta();
 private:
     const Numero numero_;
-    Usuario* titular_; //La práctica pide que el puntero sea const Usuario*, sin embargo, al hacerlo no se puede llamar al método es_titular_de() de Usuario por ejemplo
+    const Usuario* titular_; //La práctica pide que el puntero sea const Usuario*, sin embargo, al hacerlo no se puede llamar al método es_titular_de() de Usuario por ejemplo
     const Fecha caduca_;
     bool activa_;
 

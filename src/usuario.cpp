@@ -89,7 +89,7 @@ std::ostream& operator <<(std::ostream& os, const Usuario& us)
     Usuario::Tarjetas::const_iterator is; 
     for(is = us.Tarjetas_.begin(); is != us.Tarjetas_.end(); ++ is)
     {
-        os << std::endl << *(is->second);
+        os << std::endl << std::endl << *(is->second);
     }
     return os;
 }
