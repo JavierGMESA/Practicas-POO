@@ -14,11 +14,11 @@ void pruebaUsuarioTarjeta();
 
 int main()
 {
-    pruebaFechaCadena();
+    //pruebaFechaCadena();
     //pruebaArticulo();
     //pruebaClave();
     //pruebaNumero();
-    //pruebaUsuarioTarjeta();
+    pruebaUsuarioTarjeta();
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }

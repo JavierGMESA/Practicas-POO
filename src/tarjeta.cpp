@@ -1,6 +1,7 @@
 #include "tarjeta.hpp"
 #include "cadena.hpp"
 #include "usuario.hpp"
+#include "fecha.hpp"
 #include <ctype.h>
 #include <set>
 #include <iostream>
