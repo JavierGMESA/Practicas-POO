@@ -81,7 +81,7 @@ private:
     static std::unordered_set<Cadena> ids;
 };
 
-void mostrar_carro(std::ostream& os, const Usuario& us); //QUEDA POR IMPLEMENTAR
+void mostrar_carro(std::ostream& os, const Usuario& us);
 
 
 #endif
