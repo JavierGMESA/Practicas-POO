@@ -33,5 +33,6 @@ std::ostream& operator<<(std::ostream& os, const Articulo& art)
             os  << Pd;
         }
     }
+    os << " €";
     return os;
 }
