@@ -85,9 +85,10 @@ void pruebaNumero()
 
 void pruebaUsuarioTarjeta()
 {
+    Usuario us1{"TheFox102", "Javier", "Mesa", "Calle Montevideo", "Juanito"};
     try
     {
-        Usuario us1{"TheFox102", "Javier", "Mesa", "Calle Montevideo", "Juanito"};
+        
         std::cout << us1.id() << ' ' << us1.nombre() << ' ' << us1.apellidos() << ' ' << us1.direccion() << std::endl;
         Articulo a1("JJ", "Alfajor", "15/8/2023", 99.19, 100);
         Articulo a2("Jg", "Camas de seda", "17/8/2023", 99.19, 90);
@@ -121,6 +122,15 @@ void pruebaUsuarioTarjeta()
     catch(Usuario::Id_duplicado& i)
     {
         std::cerr << "El id ya estaba: " << i.idd() << std::endl;
+    }
+    try
+    {
+        Usuario us2{"TheFox1020", "Javier", "Mesa", "Calle Montevideo", "Juanito"};
+        //Tarjeta tar2{Numero{"298907654329017"}, us2, Fecha{"0/0/0"}};
+    }
+    catch(Tarjeta::Num_duplicado& e)
+    {
+        std::cerr << "Tarjeta duplicada: " << e.que() << '\n';
     }
     
 }

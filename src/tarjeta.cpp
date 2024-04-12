@@ -70,6 +70,10 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num
     {
         throw Tarjeta::Num_duplicado(num);
     }
+    else
+    {
+        Tarjeta::tarjetas.insert(num);
+    }
     us.es_titular_de(*this);
 }
 
