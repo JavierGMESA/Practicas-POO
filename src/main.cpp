@@ -14,11 +14,11 @@ void pruebaUsuarioTarjeta();
 
 int main()
 {
-    //pruebaFechaCadena();
+    pruebaFechaCadena();
     //pruebaArticulo();
     //pruebaClave();
     //pruebaNumero();
-    pruebaUsuarioTarjeta();
+    //pruebaUsuarioTarjeta();
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }
@@ -237,6 +237,15 @@ void pruebaFechaCadena()
     catch(Fecha::Invalida &e)
     {
         std::cerr << e.por_que() << '\n';
+    }
+    try
+    {
+        const Cadena cad{"Hola a todos"};
+        std::cout << cad.at(10);
+    }
+    catch(std::out_of_range& e)
+    {
+        std::cerr << e.what() << '\n';
     }
     
 }

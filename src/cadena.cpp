@@ -81,16 +81,9 @@ char& Cadena::operator[](const size_t& index)
 
 const char& Cadena::at(const size_t& index) const
 {
-    try
+    if(index > tam_ - 1 || index < 0)
     {
-        if(index > tam_ - 1 || index < 0)
-        {
-            throw index;
-        }
-    }
-    catch(std::out_of_range& e)
-    {
-        std::cout << e.what() << std::endl;
+        throw std::out_of_range ("Indice no valido");
     }
     return s_[index];
 }
@@ -116,7 +109,7 @@ Cadena Cadena::substr(const size_t& index, const size_t& tama) const
     {
         if(index + tama > tam_ - 1)
         {
-            throw std::out_of_range ("Despu�s de " + std::to_string(index) + " no hay " + std::to_string(tama) + " caracteres");
+            throw std::out_of_range ("Despues de " + std::to_string(index) + " no hay " + std::to_string(tama) + " caracteres");
         }
     }
     cad.tam_ = tama;
