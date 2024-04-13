@@ -8,7 +8,7 @@
 class Articulo
 {
 public:
-    Articulo(const Cadena& Ref, const Cadena& tit, const Fecha& pub, float precio, unsigned stk);
+    Articulo(const Cadena& Ref, const Cadena& tit, const Fecha& pub, float precio, unsigned stk = 0);
     const Cadena& referencia() const {return referencia_;}
     const Cadena& titulo() const {return titulo_;}
     const Fecha& f_publi() const {return f_publi_;}
