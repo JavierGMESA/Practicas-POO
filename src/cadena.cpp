@@ -107,7 +107,7 @@ Cadena Cadena::substr(const size_t& index, const size_t& tama) const
     }
     else
     {
-        if(index + tama > tam_ - 1)
+        if(index + tama > tam_)
         {
             throw std::out_of_range ("Despues de " + std::to_string(index) + " no hay " + std::to_string(tama) + " caracteres");
         }

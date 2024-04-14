@@ -162,7 +162,7 @@ void pruebaFechaCadena()
     std::cout << "cad1 queda: " << cad1 << " (Longitud = " << cad1.length() << ')' << std::endl;
     std::cout << cad1[0] << ' ' << cad1[1] << std::endl;
     std::cout << cad1.at(0) << ' ' << cad1.at(11) << std::endl;
-    std::cout << "cad1 cortada queda: " << cad1.substr(0, 4) << std::endl;
+    std::cout << "cad1 cortada queda: " << cad1.substr(0, cad1.length()) << std::endl;
 
     std::cout << cad1.length() << ' ' << cad3.length() << std::endl;
     std::cout << cad1 + cad3 << std::endl;
@@ -171,7 +171,7 @@ void pruebaFechaCadena()
     cad2 = cad1;
     std::cout << cad2 << std::endl;
 
-    //std::cout << "cad2 cortada queda: " << cad2.substr(0, 5) << std::endl;
+    std::cout << "cad2 cortada queda: " << cad2.substr(0, 5) << std::endl;
 
     std::cout << cad1 << ' ' << cad3 << std::endl;
 
