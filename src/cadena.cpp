@@ -5,68 +5,42 @@
 
 #include "cadena.hpp"
 
-char Cadena::vacia[1]{'\0'};
+char Cadena::vacia[1]{""};
 
 Cadena::Cadena(const size_t& tam, const char& c): tam_(tam)
 {
-    int i;
+    std::size_t i;
     if(tam == 0)
     {
         s_ = Cadena::vacia;
     }
     else
     {
-        try
+        s_ = new char[tam_ + 1];
+        for(i = 0; i < tam_; ++i)
         {
-            s_ = new char[tam_ + 1];
-            for(i = 0; i < tam_; ++i)
-            {
-                s_[i] = c;
-            }
-            s_[tam_] = '\0';
+            s_[i] = c;
         }
-        catch(std::bad_alloc& e)
-        {
-            std::cout << e.what() << std::endl;
-        }
+        s_[tam_] = '\0';
     }
 }
 
-Cadena::Cadena(const char *cad)
+Cadena::Cadena(const char *cad): tam_{std::strlen(cad)}
 {
-    int i;
-    try
+    if(tam_ == 0)
     {
-        for(tam_ = 0; cad[tam_]!= '\0'; ++tam_);
-        s_ = new char[tam_ + 1];
-        for(i = 0; i < tam_ + 1; ++i)
-        {
-            s_[i] = cad[i];
-        }
+        s_ = Cadena::vacia;
     }
-    catch(std::bad_alloc& e)
+    else
     {
-        std::cout << e.what() << std::endl;
+        s_ = new char[tam_ + 1];
+        std::strcpy(s_, cad);
     }
 }
 
 Cadena::operator const char*() const
 {
-    int i;
-    char *cad;
-    try
-    {
-        cad = new char[tam_ + 1];
-        for(i = 0; i < tam_ + 1; ++i)
-        {
-            cad[i] = s_[i];
-        }
-    }
-    catch(std::bad_alloc& e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-    return cad;
+    return s_;
 }
 
 const char& Cadena::operator[](const size_t& index) const
@@ -81,43 +55,46 @@ char& Cadena::operator[](const size_t& index)
 
 const char& Cadena::at(const size_t& index) const
 {
-    if(index > tam_ - 1 || index < 0)
+    if(index < 0 || index >= tam_)
     {
-        throw std::out_of_range ("Indice no valido");
+        throw std::out_of_range("Indice no valido");
     }
     return s_[index];
 }
 
 char& Cadena::at(const size_t& index)
 {
-    if(index > tam_ - 1 || index < 0)
+    if(index < 0 || index >= tam_)
     {
-        throw std::out_of_range ("Indice no valido");
+        throw std::out_of_range("Indice no valido");
     }
     return s_[index];
 }
 
-Cadena Cadena::substr(const size_t& index, const size_t& tama) const
+Cadena Cadena::substr(int index, int tama) const
 {
-    Cadena cad{tama, 'm'};
-    int i;
-    if(s_ == Cadena::vacia || index > tam_ - 1 || index < 0)
-    {
-        throw std::out_of_range (std::to_string(index) + " esta fuera de rango");
-    }
-    else
-    {
-        if(index + tama > tam_)
-        {
-            throw std::out_of_range ("Despues de " + std::to_string(index) + " no hay " + std::to_string(tama) + " caracteres");
-        }
-    }
-    cad.tam_ = tama;
-    for(i = 0; i < tama; ++i)
-    {
-        cad.s_[i] = s_[i + index];
-    }
-    cad.s_[i] = '\0';
+    //Cadena cad{tama, ' '};
+    //size_t i;
+    //if(index < 0 || index >= tam_)
+    //{
+    //    throw std::out_of_range ("Índice esta fuera de rango");
+    //}
+    //if(tama < 0 || index + tama - 1 >= tam_)
+    //{
+    //    throw std::out_of_range ("Tamaño fuera de rango");
+    //}
+    //for(i = 0; i < tama; ++i, ++index)
+    //{
+    //    cad.s_[i] = s_[index];
+    //}
+    //cad.s_[i] = '\0'; No hace falta pues ya lo pone cad en el constructor
+    if (index < 0 || index >= tam_)
+        throw std::out_of_range("El índice no es válido");
+    if (tama < 0 || tama + index - 1 >= tam_)
+        throw std::out_of_range("El tamaño está fuera de rango");
+    Cadena cad(tama, ' ');
+    for (size_t i = 0; i < tama; ++index, ++i)
+        cad.s_[i] = s_[index];
     return cad;
 }
 
@@ -158,97 +135,82 @@ bool operator!=(const Cadena& cade1, const Cadena& cade2)
     return !(cade1 == cade2);
 }
 
-Cadena& Cadena::operator=(const char* cad)
+Cadena& Cadena::operator+=(const Cadena& cade)
 {
-    *this = Cadena(cad);
+    char *cad = s_;
+
+    if(tam_ + cade.tam_ == 0)
+    {
+        s_ = Cadena::vacia;
+    }
+    else
+    {
+        s_ = new char[tam_ + cade.tam_ + 1];
+        std::strcpy(s_, cad);
+        std::strcat(s_, cade.s_);
+    }
+    if(cad != Cadena::vacia)
+    {
+        delete[] cad;
+    }
+    tam_ = tam_ + cade.tam_;
+
     return *this;
 }
 
-Cadena& Cadena::operator+=(const Cadena& cade)
+Cadena& Cadena::operator=(const char* cade)
 {
-    int i = 0;
-    int j = 0;
-    char *cad;
-    try
+    if(strcmp(s_, cade) != 0)
     {
-        cad = new char[tam_ + cade.tam_ + 1]; //Si hay un bad_alloc pasa directamente al manejador
-        if(s_ != Cadena::vacia)
-        {
-            while(s_[i] != '\0')
-            {
-                cad[i] = s_[i];
-                ++i;
-            }
-        }
-        if(cade.s_ != Cadena::vacia)
-        {
-            while(cade.s_[j] != '\0')
-            {
-                cad[i] = cade.s_[j];
-                ++i;
-                ++j;
-            }
-        }
-        cad[i] = '\0';
-        if(s_ != Cadena::vacia)
+        if(tam_ != 0)
         {
             delete[] s_;
         }
-        s_ = cad;
-        tam_ = tam_ + cade.tam_ + 1;
-    }
-    catch(std::bad_alloc& e)
-    {
-        std::cout << e.what() << std::endl;
+        if(std::strlen(cade) == 0)
+        {
+            s_ = Cadena::vacia;
+        }
+        else
+        {
+            s_ = new char[std::strlen(cade) + 1];
+            std::strcpy(s_, cade);
+        }
+        tam_ = std::strlen(cade);
     }
     return *this;
 }
 
-Cadena::Cadena(const Cadena& cade)
+Cadena::Cadena(const Cadena& cade): tam_{cade.tam_}
 {
-    int i;
-    try
+    if(tam_ == 0)
     {
-        s_ = new char[cade.tam_ + 1];
-        tam_ = cade.tam_;
-        for(i = 0; i < tam_ + 1; ++i)
-        {
-            s_[i] = cade.s_[i];
-        }
+        s_ = Cadena::vacia;
     }
-    catch(std::bad_alloc& e)
+    else
     {
-        std::cout << e.what() << std::endl;
+        s_ = new char[tam_ + 1];
+        std::strcpy(s_, cade.s_);
     }
 }
 
 Cadena& Cadena::operator=(const Cadena& cade)
 {
-    char *cad;
-    int i;
     if(this != &cade)
     {
-        try
+        
+        if(s_ != Cadena::vacia)
         {
-            cad = new char[cade.tam_ + 1]; //No hace falta guardar una copia pues
-            if(s_ == Cadena::vacia)
-            {
-                s_ = cad;
-            }
-            else
-            {
-                delete[] s_;
-            }
-            for(i = 0; i < cade.tam_ + 1; ++i)
-            {
-                cad[i] = cade.s_[i];
-            }
+            delete[] s_;
         }
-        catch(std::bad_alloc& e)
+        if(cade.tam_ == 0)
         {
-            std::cout << e.what() << std::endl;
+            s_ = Cadena::vacia;
         }
-        s_ = cad;
+        else
+        {
+            s_ = new char[cade.tam_ + 1];
+            strcpy(s_, cade.s_);
+        }
         tam_ = cade.tam_;
     }
     return *this;
@@ -264,10 +226,8 @@ Cadena::~Cadena()
     }
 }
 
-Cadena::Cadena(Cadena&& cade)
+Cadena::Cadena(Cadena&& cade): tam_{cade.tam_}, s_{cade.s_}
 {
-    s_ = cade.s_;
-    tam_ = cade.tam_;
     cade.s_ = Cadena::vacia;
     cade.tam_ = 0;
 }
@@ -290,22 +250,38 @@ Cadena& Cadena::operator=(Cadena&& cade)
 
 std::istream& operator >>(std::istream& is, Cadena& cade)
 {
-    char cad1[100], cad2[32];
-    int i = -1, j = 0;
-    is >> cad1;
-    do
+    char cad1[33], cad2[32], c;
+    int i = 0, j = 0;
+    //is >> cad1;
+    //do
+    //{
+    //    ++i;
+    //}while(cad1[i] == ' ');
+    cad1[0] = '\0';
+    while(is.get(c) && std::isspace(c));
+    if (is)
     {
-        ++i;
-    }while(cad1[i] == ' ');
-
-    while(cad1[i] != '\0' && cad1[i] != ' ' && j + 1 != 31)
-    {
-        cad2[j] = cad1[i];
-        ++i,
-        ++j;
+        cad1[0] = c;
+        is.get(cad1 + 1, 32, ' ');
     }
-    cad2[i] = '\0';
-    cade = Cadena(cad2);
+
+    for(i= 0; i <= 32 && cad1[i] != '\0' && !(j != 0 && std::isspace(cad1[i])); ++i)
+    {
+        if (!std::isspace(cad1[i]))
+        {
+            cad2[j] = cad1[i];
+            ++j;
+        }
+    }
+    cad2[j] = '\0';
+    if(j == 0)
+    {
+        cade = Cadena{};
+    }
+    else
+    {
+        cade = Cadena(cad2);
+    }
     return is;
 }
 

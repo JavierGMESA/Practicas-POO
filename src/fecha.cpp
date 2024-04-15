@@ -28,9 +28,9 @@ Fecha::Fecha(int diaPas, int mesPas, int annoPas): Dia(diaPas), Mes(mesPas), Ann
 
 Fecha::Fecha(const char *cad): Dia(-1), Mes(-1), Anno(-1)
 {
-    unsigned diaM;
+    //unsigned diaM;
     char cad1[10], cad2[3], cad3[11], cad4[6];
-    sscanf(cad, "%i/%i/%i", &Dia, &Mes, &Anno);
+    sscanf(cad, "%d/%d/%d", &Dia, &Mes, &Anno);
     if(Dia < 0 || Mes < 0 || Anno < 0)
     {
         throw Fecha::Invalida("La fecha introducida es invalida");
@@ -38,21 +38,45 @@ Fecha::Fecha(const char *cad): Dia(-1), Mes(-1), Anno(-1)
     else
     {
         actualidad();
-        diaM = diaMaximo();
-        dia_semana(cad1);
-        std::strcpy(crep, cad1);
-        std::strcat(crep, " ");
-        dia_a_cadena(cad2);
-        std::strcat(crep, cad2);
-        std::strcat(crep, " de ");
-        mes_a_cadena(cad3);
-        std::strcat(crep, cad3);
-        std::strcat(crep, " de ");
-        anno_a_cadena(cad4);
-        std::strcat(crep, cad4);
-        std::strcat(crep, "\0");
+        char *dia[] = {
+            "domingo",
+            "lunes",
+            "martes",
+            "miércoles",
+            "jueves",
+            "viernes",
+            "sábado"
+        };
+        char *mes[] = {
+            "enero",
+            "febrero",
+            "marzo",
+            "abril",
+            "mayo",
+            "junio",
+            "julio",
+            "agosto",
+            "septiembre",
+            "octubre",
+            "noviembre",
+            "diciembre"
+        };
+        struct std::tm * nuevo_tm = new std::tm{ 0 };
+        nuevo_tm->tm_sec = 0;    // Segundos
+        nuevo_tm->tm_min = 0;    // Minutos
+        nuevo_tm->tm_hour = 0;   // Horas
+        nuevo_tm->tm_mday = Dia;
+        nuevo_tm->tm_mon = Mes - 1;
+        nuevo_tm->tm_year = Anno - 1900;
+        mktime(nuevo_tm);
+        sprintf(crep, "%s %i de %s de %i", dia[nuevo_tm->tm_wday], Dia, mes[Mes - 1], Anno);
         actual = true;
-        if(!comprobarFecha(diaM))
+        delete nuevo_tm;
+
+
+
+        actual = true;
+        if(!comprobarFecha(diaMaximo()))
         {
             throw Fecha::Invalida("La fecha introducida es invalida");
         }
@@ -123,61 +147,36 @@ unsigned Fecha::diaMaximo() const
 Fecha& Fecha::operator+=(int e)
 {
     int diasDeMas;
-    Fecha f{*this};
-    Dia = Dia + e;
     actual = false;
-    if(e == 0)
+
+    struct std::tm nuevo_tm { 0 };
+
+    nuevo_tm.tm_sec = 0;
+    nuevo_tm.tm_min = 0;
+    nuevo_tm.tm_hour = 0;
+    nuevo_tm.tm_mday = Dia + e;
+    nuevo_tm.tm_mon = Mes - 1;
+    nuevo_tm.tm_year = Anno - 1900;
+
+    mktime(&nuevo_tm);
+    // tiempo += 60 * 60 * 24 * (n + 1);
+
+    Dia = nuevo_tm.tm_mday;
+    Mes = nuevo_tm.tm_mon + 1;
+    Anno = nuevo_tm.tm_year + 1900;
+
+    //try
+    //{
+    if(!comprobarFecha(diaMaximo()))
     {
-        actual = true;
+        throw Fecha::Invalida("Fecha fuera de rango");
     }
-    else
-    {
-        try
-        {
-            if(Dia > diaMaximo())
-            {
-                diasDeMas = Dia - diaMaximo();
-                while(diasDeMas > 0)
-                {
-                    ++Mes;
-                    if(Mes > 12)
-                    {
-                        Mes = 1;
-                        ++Anno;
-                    }
-                    Dia = diasDeMas;
-                    diasDeMas = Dia - diaMaximo();
-                }
-            }
-            else
-            {
-                if(Dia < 1)
-                {
-                    diasDeMas = - Dia;
-                    while(diasDeMas >= 0)
-                    {
-                        --Mes;
-                        if(Mes == 0)
-                        {
-                            Mes = 12;
-                            --Anno;
-                        }
-                        Dia = diaMaximo() - diasDeMas;
-                        diasDeMas = -Dia;
-                    }
-                }
-            }
-            if(!comprobarFecha(diaMaximo()))
-            {
-                throw Fecha::Invalida("Fecha fuera de rango");
-            }
-        }
-        catch(Fecha::Invalida&)
-        {
-            std::cout << "La modificacion no es valida, la fecha devuelta sera la fecha operando sin modificar";
-            *this = f;
-        }
-    }
+    //}
+    //catch(Fecha::Invalida&)
+    //{
+    //    std::cout << "La modificacion no es valida, la fecha devuelta sera la fecha operando sin modificar";
+    //    *this = f;
+    //}
     return *this;
 }
 
@@ -232,27 +231,45 @@ const char* Fecha::cadena() const
 {
     int i;
     char cad1[10], cad2[3], cad3[11], cad4[6];
-    if(actual)
+    if(!actual)
     {
-        return crep;
-    }
-    else
-    {
-        dia_semana(cad1);
-        std::strcpy(crep, cad1);
-        std::strcat(crep, " ");
-        dia_a_cadena(cad2);
-        std::strcat(crep, cad2);
-        std::strcat(crep, " de ");
-        mes_a_cadena(cad3);
-        std::strcat(crep, cad3);
-        std::strcat(crep, " de ");
-        anno_a_cadena(cad4);
-        std::strcat(crep, cad4);
-        std::strcat(crep, "\0");
+
+        char *dia[] = {
+            "domingo",
+            "lunes",
+            "martes",
+            "miércoles",
+            "jueves",
+            "viernes",
+            "sábado"
+        };
+        char *mes[] = {
+            "enero",
+            "febrero",
+            "marzo",
+            "abril",
+            "mayo",
+            "junio",
+            "julio",
+            "agosto",
+            "septiembre",
+            "octubre",
+            "noviembre",
+            "diciembre"
+        };
+        struct std::tm * nuevo_tm = new std::tm{ 0 };
+        nuevo_tm->tm_sec = 0;    // Segundos
+        nuevo_tm->tm_min = 0;    // Minutos
+        nuevo_tm->tm_hour = 0;   // Horas
+        nuevo_tm->tm_mday = Dia;
+        nuevo_tm->tm_mon = Mes - 1;
+        nuevo_tm->tm_year = Anno - 1900;
+        mktime(nuevo_tm);
+        sprintf(crep, "%s %i de %s de %i", dia[nuevo_tm->tm_wday], Dia, mes[Mes - 1], Anno);
         actual = true;
-        return crep;
+        delete nuevo_tm;
     }
+    return crep;
 }
 
 bool operator<(const Fecha& f1, const Fecha& f2)
@@ -338,7 +355,7 @@ void Fecha::dia_semana(char *cad) const
         cad[6] = '\0';
         break;
     case 3:
-        std::strcpy(cad, "miercoles");
+        std::strcpy(cad, "miércoles");
         cad[9] = '\0';
         break;
     case 4:
@@ -460,8 +477,18 @@ int Fecha::CalcularDiaSemana() const
 std::istream& operator >>(std::istream& is, Fecha& fech)
 {
     char cad[100];
-    is.getline(cad, 100, '\n');
-    fech = Fecha(cad);
+    //is.getline(cad, 100, '\n');
+    is.width(100); //Por que?
+    is >> cad;
+    try
+    {
+        fech = Fecha(cad);
+    }
+    catch(Fecha::Invalida& e)
+    {
+        is.setstate(std::_S_failbit);
+        throw;
+    }
     return is;
 }
 

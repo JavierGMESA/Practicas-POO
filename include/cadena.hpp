@@ -25,17 +25,21 @@ public:
     char& operator[](const size_t& index);
     const char& at(const size_t& index) const;
     char& at(const size_t& index);
-    Cadena substr(const size_t& index, const size_t& tama) const;
+    Cadena substr(int index, int tama) const;
 
     Cadena& operator+=(const Cadena& cade);
-    Cadena& operator=(const char* cad);
+    Cadena& operator=(const char* cade);
 
     iterator begin(){return s_;}
     iterator end(){return s_ + tam_;}
+    const_iterator begin() const{return s_;}
+    const_iterator end() const{return s_ + tam_;}
     const_iterator cbegin() const{return s_;}
     const_iterator cend() const{return s_ + tam_;}
     reverse_iterator rbegin(){return reverse_iterator(end());}
     reverse_iterator rend(){return reverse_iterator(begin());}
+    const_reverse_iterator rbegin() const{return const_reverse_iterator(end());}
+    const_reverse_iterator rend() const{return const_reverse_iterator(begin());}
     const_reverse_iterator crbegin() const{return const_reverse_iterator(cend());}
     const_reverse_iterator crend() const{return const_reverse_iterator(cbegin());}
 

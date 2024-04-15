@@ -247,5 +247,22 @@ void pruebaFechaCadena()
     {
         std::cerr << e.what() << '\n';
     }
+
+    try
+    {
+        const Fecha f("11/09/2001");
+    }
+    catch(Fecha::Invalida& e)
+    {
+        std::cerr << e.por_que() << '\n';
+    }
+    
+    std::cout << "Va a mostrar" << std::endl;
+
+    Cadena a("Ingles,");
+    std::cout << a << std::endl;
+    const Cadena b(" pirata es");
+    a += b;
+    std::cout << a << ' ' << a.operator const char *() << std::endl;
     
 }
