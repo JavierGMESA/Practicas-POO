@@ -48,7 +48,7 @@ bool Clave::verifica(const char* passwd) const
 
 std::unordered_set<Cadena> Usuario::ids{};
 
-Usuario::Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  const Cadena& direccion, const char* passwd): id_{id}, nombre_{nom}, apellidos_{apell}, direccion_{direccion}, passwd_{passwd}
+Usuario::Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  const Cadena& direccion, const Clave& passwd): id_{id}, nombre_{nom}, apellidos_{apell}, direccion_{direccion}, passwd_{passwd}
 {
     std::pair <tipolt, bool> res = Usuario::ids.insert(id); //comprobar si el id está en el conjunto
     if(!(res.second))

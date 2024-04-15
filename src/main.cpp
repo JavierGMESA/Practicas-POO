@@ -14,11 +14,62 @@ void pruebaUsuarioTarjeta();
 
 int main()
 {
-    pruebaFechaCadena();
+    //pruebaFechaCadena();
     //pruebaArticulo();
     //pruebaClave();
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
+
+    const Cadena referencia("1234XYZ");
+
+    std::cout << "Crea1" << std::endl;
+
+    const Cadena titulo("Prueba");
+    const Fecha  fecha(10, 10, 2000);
+
+    std::cout << "Crea3" << std::endl;
+
+    const Cadena sId("pperez");
+    const Cadena sNombre("Perico");
+    const Cadena sApellidos("Perez Palotes");
+
+    std::cout << "Crea5" << std::endl;
+
+    const Cadena sDireccion("13 Rue del Percebe");
+    const Clave  clave("pedrofueacomprarpan");
+
+    std::cout << "Crea7" << std::endl;
+
+    const Numero nTarjeta("4164 2959 2196 7832");
+    const Numero nTarjeta2("3138799837441258");
+
+    std::cout << "Crea9" << std::endl;
+
+    const Numero nTarjeta3("5544313153232185");
+    const Fecha  fHoy;
+
+    std::cout << "Crea11" << std::endl;
+
+    const Fecha  fUnaSemana = fHoy + 7;
+    const Fecha  fSiguienteAnno(1, 1, fHoy.anno() + 1);
+
+    std::cout << "Crea13" << std::endl;
+
+    Articulo articulo1("111", "The Standard Template Library", fHoy, 42.10, 200);
+    Articulo articulo2("110", "Programadores de C++", fHoy, 11.95, 100);
+
+    std::cout << "Crea15" << std::endl;
+
+    Usuario* pU { nullptr };
+
+    using TIPO = Tarjeta::Tipo;
+
+    bool bPrimera = true;
+
+    pU = new Usuario(sId, sNombre, sApellidos, sDireccion, clave);
+
+    std::cout << "Crea17" << std::endl;
+
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }

@@ -176,7 +176,7 @@ std::ostream& operator <<(std::ostream& os, Tarjeta::Tipo t)
 std::ostream& operator<<(std::ostream& os, const Tarjeta& tar)
 {
     Cadena::const_iterator i;
-    Cadena nombre = tar.titular().nombre();
+    Cadena nombre = tar.titular()->nombre();
     Cadena caducidad;
     os << tar.tipo() << std::endl;
     os << tar.numero() << std::endl;
@@ -186,7 +186,7 @@ std::ostream& operator<<(std::ostream& os, const Tarjeta& tar)
         os << char(std::toupper(*i));
     }
     os << ' ';
-    nombre = tar.titular().apellidos();
+    nombre = tar.titular()->apellidos();
     for(i = nombre.begin(); i != nombre.end(); ++i)
     {
         os << char(std::toupper(*i));

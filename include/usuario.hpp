@@ -50,7 +50,7 @@ public:
         Cadena id_incorrecto;
     };
 
-    Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  const Cadena& direccion, const char* passwd);
+    Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  const Cadena& direccion, const Clave& passwd);
 
     const Cadena& id() const {return id_;}
     const Cadena& nombre() const {return nombre_;}

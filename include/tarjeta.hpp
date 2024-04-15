@@ -58,7 +58,7 @@ public:
     Tarjeta(const Numero& num, Usuario& us, const Fecha& fech);
 
     const Numero& numero() const {return numero_;}
-    const Usuario& titular() const {return *titular_;}
+    const Usuario* titular() const {return titular_;}
     const Fecha& caducidad() const {return caduca_;}
     bool activa() const {return activa_;}
     Tipo tipo() const;
