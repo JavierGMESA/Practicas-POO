@@ -70,6 +70,18 @@ int main()
 
     std::cout << "Crea17" << std::endl;
 
+    if (pU) {
+      delete pU;
+      pU = nullptr;
+    }
+
+    try {
+      Clave c("");
+    }
+    catch (const Clave::Incorrecta& ex) {
+      std::cout << ex.razon() << std::endl;
+    }
+
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
 }

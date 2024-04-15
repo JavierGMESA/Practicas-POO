@@ -19,7 +19,6 @@ public:
     class Incorrecta
     {
     public:
-        
         Incorrecta(Razon r): reason{r} {}
         Razon razon() const {return reason;}
     private:

@@ -68,10 +68,7 @@ void Usuario::es_titular_de(Tarjeta& tar)
 
 void Usuario::no_es_titular_de(Tarjeta& tar)
 {
-    if(Tarjetas_.count(tar.numero_))
-    {
-        Tarjetas_.erase(tar.numero_);
-    }
+    Tarjetas_.erase(tar.numero_);
 }
 
 void Usuario::compra(Articulo& art, unsigned ctd)
@@ -118,5 +115,6 @@ Usuario::~Usuario()
     {
         it->second->anula_titular();
     }
+    Usuario::ids.erase(id_);
 }
 
