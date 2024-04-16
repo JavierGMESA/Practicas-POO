@@ -69,6 +69,8 @@ public:
         Numero num_;
     };
 
+    class Desactivada{};
+
 
     Tarjeta(const Numero& num, Usuario& us, const Fecha& fech);
 

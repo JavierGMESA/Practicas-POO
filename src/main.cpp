@@ -7,6 +7,7 @@
 #include "tarjeta.hpp"
 #include <unistd.h>
 #include <cstring>
+#include <locale>
 
 void pruebaFechaCadena();
 void pruebaArticulo();
@@ -14,31 +15,16 @@ void pruebaClave();
 void pruebaNumero();
 void pruebaUsuarioTarjeta();
 
+//typedef basic_ostringstream<char> ostringstream;
+
 int main()
 {
-    //ostringstream os;
-    //os.imbue(std::locale(std::locale("es_ES.UTF-8"), new sin_separador()));
-    
+
     //pruebaFechaCadena();
     //pruebaArticulo();
     //pruebaClave();
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
-
-    Cadena caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
-    std::cout << caracteres << std::endl;
-    try
-    {
-        const Numero n1("01234\v5\r6 789\t012\f8"), n2("01234567890128");
-        std::cout << n1 << ' ' << n2 << std::endl;
-    }
-    catch(Numero::Incorrecto& e)
-    {
-        std::cerr << e.razon() << '\n';
-    }
-    
-    
-
 
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
