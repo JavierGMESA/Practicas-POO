@@ -3,16 +3,15 @@
 #include "articulo.hpp"
 #include "fecha.hpp"
 #include "cadena.hpp"
-#include <unistd.h>
 #include <unordered_map>
 #include <map>
 #include <unordered_set>
 #include <random>
 #include <crypt.h>
-#include <iostream>
 #include <random>
 #include <ctime>
 #include <iostream>
+#include <unistd.h>
 
 //Cadena Clave::caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
 //const char Clave::caracteres[65]{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
@@ -68,9 +67,9 @@ Usuario::Usuario(const Cadena& id, const Cadena& nom, const Cadena& apell,  cons
 
 void Usuario::es_titular_de(Tarjeta& tar)
 {
-    if(!Tarjetas_.count(tar.numero_))
+    if(!Tarjetas_.count(tar.numero_) && tar.activa_ && tar.titular_ == nullptr)
     {
-        Tarjetas_[tar.numero_] = &tar;
+        Tarjetas_.insert(std::make_pair(tar.numero_, &tar));
     }
     tar.titular_ = this;
 }
@@ -82,10 +81,10 @@ void Usuario::no_es_titular_de(Tarjeta& tar)
 
 void Usuario::compra(Articulo& art, unsigned ctd)
 {
-    Articulos_.erase(&art);
-    if(ctd != 0)
+    Articulos_[&art] = ctd;
+    if(ctd == 0)
     {
-        Articulos_[&art] = ctd;
+        Articulos_.erase(&art);
     }
 }
 
@@ -103,17 +102,16 @@ std::ostream& operator <<(std::ostream& os, const Usuario& us)
 
 void mostrar_carro(std::ostream& os, const Usuario& us)
 {
-    os << "Carrito de compra de " << us.id() << " [Articulos: " << us.n_articulos() << ']' << std::endl;
-    os << " Cant. Articulo" << std::endl;
+    os << "Carrito de compra de " << us.id() << " [Artículos: " << us.n_articulos() << ']' << std::endl;
+    os << " Cant.  Artículo" << std::endl;
     int i;
-    for(i = 0; i < 25; ++i)
-    {
-        os << '=';
-    }
+    os.fill('=');
+    os.width(60);
+    os << "" << std::endl;
     Usuario::Articulos::const_iterator is;
     for(is = us.compra().begin(); is != us.compra().end(); ++is) // Por que?
     {
-        os << std::endl << "   " << is->second << "   " << *(is->first);
+        os << std::endl << "  " << is->second << "   " << *(is->first);
     }
 }
 

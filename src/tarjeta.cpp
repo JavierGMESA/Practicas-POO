@@ -45,7 +45,7 @@ Numero::Numero(const Cadena& num): numero_{num}
     }
     correct_n[j] = '\0';
     numero_ = Cadena(correct_n);
-    
+
     //numero_ = Cadena(numero_.operator const char *());
 
     if(!numerico)
@@ -83,15 +83,10 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num
     {
         throw Tarjeta::Caducada(caduca_);
     }
-    if(Tarjeta::tarjetas.count(num))
-    {
-        throw Tarjeta::Num_duplicado(num);
-    }
-    else
-    {
-        Tarjeta::tarjetas.insert(num);
-    }
     us.es_titular_de(*this);
+    std::pair<IT, bool> res = Tarjeta::tarjetas.insert(numero_);
+    if (!res.second)
+        throw Num_duplicado(numero_);
 }
 
 Tarjeta::Tipo Tarjeta::tipo() const
@@ -146,6 +141,7 @@ Tarjeta::~Tarjeta()
     if(titular_ != nullptr)
     {
         const_cast<Usuario *>(titular_)->no_es_titular_de(*this);
+        titular_ = nullptr;
     }
     Tarjeta::tarjetas.erase(numero_);
 }

@@ -13,26 +13,27 @@ std::ostream& operator<<(std::ostream& os, const Articulo& art)
 {
     float PEntera, Pdecimal;
     int Pd;
-    Pdecimal = modf(art.precio(), &PEntera);
-    Pd = Pdecimal * 100;
+    //Pdecimal = modf(art.precio(), &PEntera);
+    //Pd = Pdecimal * 100;
     //std::locale localidad("");
     //os.imbue(localidad);
-    os << '[' << art.referencia() << "]" << ' ' << '"' << art.titulo() << '"' << ", " << art.f_publi().anno() << ". " << PEntera << ",";
-    if(Pd == 0)
-    {
-        os << "00";
-    }
-    else
-    {
-        if(Pd < 10)
-        {
-            os << '0' << Pd;
-        }
-        else
-        {
-            os  << Pd;
-        }
-    }
-    os << " €";
+    os << '[' << art.referencia() << "]" << ' ' << '"' << art.titulo() << '"' << ", " << art.f_publi().anno() << ". ";
+    os <</* PEntera << ","  art.precio()*/ /* << " €" */ std::ceil(art.precio() * 100.0) / 100.0 << " €";
+    //if(Pd == 0)
+    //{
+    //    os << "00";
+    //}
+    //else
+    //{
+    //    if(Pd < 10)
+    //    {
+    //        os << '0' << Pd;
+    //    }
+    //    else
+    //    {
+    //        os  << Pd;
+    //    }
+    //}
+    //os << " €";
     return os;
 }

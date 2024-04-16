@@ -95,6 +95,7 @@ private:
     bool activa_;
 
     static std::set<Numero> tarjetas;
+    typedef std::set<Numero>::iterator IT;
 
     void anula_titular();
 };

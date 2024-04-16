@@ -5,6 +5,8 @@
 #include "articulo.hpp"
 #include "usuario.hpp"
 #include "tarjeta.hpp"
+#include <unistd.h>
+#include <cstring>
 
 void pruebaFechaCadena();
 void pruebaArticulo();
@@ -14,6 +16,9 @@ void pruebaUsuarioTarjeta();
 
 int main()
 {
+    //ostringstream os;
+    //os.imbue(std::locale(std::locale("es_ES.UTF-8"), new sin_separador()));
+    
     //pruebaFechaCadena();
     //pruebaArticulo();
     //pruebaClave();
