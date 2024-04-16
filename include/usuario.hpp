@@ -30,7 +30,8 @@ public:
 private:
     Cadena clave_;
     char encriptacion_[3];
-    static Cadena caracteres;
+    //static Cadena caracteres;
+    //static const char caracteres[];
 };
 
 

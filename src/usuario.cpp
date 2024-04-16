@@ -10,16 +10,21 @@
 #include <random>
 #include <crypt.h>
 #include <iostream>
-
+#include <random>
+#include <ctime>
 #include <iostream>
 
-Cadena Clave::caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
+//Cadena Clave::caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
+//const char Clave::caracteres[65]{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
 
 Clave::Clave(const char* passwd): clave_{passwd}
 {
+    static Cadena caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
+    //std::srand(std::time(nullptr));
+
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::uniform_int_distribution<char> distrib(0, Clave::caracteres.length() - 1);
+    std::uniform_int_distribution<char> distrib(0, 63);
     char * c;
     if(clave_.length() < 5)
     {
@@ -30,8 +35,12 @@ Clave::Clave(const char* passwd): clave_{passwd}
         //crypt devuelve un puntero a cadena
         //crypt recibe la cadena a encriptar y como segunda una cadena de dos caracteres que deben estar entre [a-zA-Z0-9./]
         encriptacion_[2] = '\0';
-        encriptacion_[0] = Clave::caracteres[distrib(gen)];
-        encriptacion_[1] = Clave::caracteres[distrib(gen)];
+        encriptacion_[0] = caracteres[distrib(gen)];
+        encriptacion_[1] = caracteres[distrib(gen)];
+
+        //encriptacion_[0] = Clave::caracteres[rand() % Clave::caracteres.length()];
+        //encriptacion_[1] = Clave::caracteres[rand() % Clave::caracteres.length()];
+
         c = crypt(passwd, encriptacion_);
         if(c == nullptr) //cuando crypt falla devuelve un puntero nulo
         {

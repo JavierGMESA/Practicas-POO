@@ -5,6 +5,9 @@
 //#include "usuario.hpp"
 #include <set>
 #include <iostream>
+#include <string.h>
+#include <algorithm>
+#include <functional>
 
 class Usuario;
 class Numero
@@ -19,6 +22,18 @@ public:
         Razon razon() const {return razon_;}   
     private:
         Razon razon_;
+    };
+
+    class EsBlanco
+    {
+    public:
+        bool operator()(char* p)const {return std::isspace(*p);}
+    };
+
+    class EsDigito
+    {
+    public:
+        bool operator()()const {std::logical_not<int>();} //QUEDA POR IMPLEMENTAR
     };
 
     Numero(const Cadena& num);

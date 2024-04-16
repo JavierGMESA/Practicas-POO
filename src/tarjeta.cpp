@@ -5,22 +5,37 @@
 #include <ctype.h>
 #include <set>
 #include <iostream>
+#include <algorithm>
+#include <functional>
 
 Numero::Numero(const Cadena& num): numero_{num}
 {
     bool numerico = true;
     char* correct_n = new char[numero_.length()];
     int i = 0, j = 0;
-    for(i = 0; i < numero_.length(); ++i)
+
+    //for(i = 0; i < numero_.length(); ++i)
+
+    //Cadena::iterator new_end = std::remove_if(numero_.begin(), numero_.end(), Numero::EsBlanco::operator());
+    //Cadena::iterator it = numero_.begin();
+    
+    //while(it != new_end && numerico)
     while(i < numero_.length() && numerico)
     {
-        if(!std::isdigit(numero_[i]) && numero_[i] != ' ')
+        
+        //if(!std::isdigit(*it) && !std::isspace(*it))
+        //if(it != std::find_if(it, numero_.end(), Numero::EsDigito::operator()))
+        //{
+        //    numerico = false;
+        //}
+
+        if(!std::isdigit(numero_[i]) && !std::isspace(numero_[i]))
         {
             numerico = false;
         }
         else
         {
-            if(numero_[i] != ' ')
+            if(!std::isspace(numero_[i]))
             {
                 correct_n[j] = numero_[i];
                 ++j;
@@ -29,8 +44,10 @@ Numero::Numero(const Cadena& num): numero_{num}
         }   
     }
     correct_n[j] = '\0';
-
     numero_ = Cadena(correct_n);
+    
+    //numero_ = Cadena(numero_.operator const char *());
+
     if(!numerico)
     {
         numero_ = Cadena("");
@@ -130,6 +147,7 @@ Tarjeta::~Tarjeta()
     {
         const_cast<Usuario *>(titular_)->no_es_titular_de(*this);
     }
+    Tarjeta::tarjetas.erase(numero_);
 }
 
 std::ostream& operator <<(std::ostream& os, Tarjeta::Tipo t)
