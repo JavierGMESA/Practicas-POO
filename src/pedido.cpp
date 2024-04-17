@@ -8,7 +8,7 @@
 
 int Pedido::n_pedidos_{0};
 
-Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& tar, const Fecha& f): numero_{0}, importe_{0}, tar_de_pago_{&tar}, f_pedido_{f}
+Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& tar, const Fecha& f): numero_{0}, importe_{0.0}, tar_de_pago_{&tar}, f_pedido_{f}
 {
     Usuario::Articulos art_us = us.compra();
     if(art_us.size() == 0)
@@ -38,7 +38,7 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& 
     for(it = art_us.begin(); it != art_us.end(); ++it)
     {
         (*(it->first)).stock() -= it->second;
-        importe_ += (*(it->first)).precio() * it->second;
+        importe_ += (*(it->first)).precio() * (it->second);
     }
     
     //Al final

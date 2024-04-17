@@ -50,11 +50,12 @@ public:
     int numero() const {return numero_;}
     const Tarjeta* tarjeta() const {return tar_de_pago_;}
     const Fecha& fecha() const {return f_pedido_;}
-    int total() const {return importe_;}
+    float total() const {return importe_;}
     int total_pedidos() const {return Pedido::n_pedidos_;}
 
 private:
-    int numero_, importe_;
+    float  importe_;
+    int numero_,;
     const Tarjeta* tar_de_pago_;
     Fecha f_pedido_;
     static int n_pedidos_;
