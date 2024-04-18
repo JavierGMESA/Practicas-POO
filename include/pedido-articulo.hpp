@@ -3,6 +3,7 @@
 
 #include <map>
 #include "articulo.hpp"
+#include "pedido.hpp"
 #include <iostream>
 
 class Pedido;
@@ -33,12 +34,28 @@ public:
     class OrdenaPedidos
     {
     public:
-        bool operator()(const Articulo* p1, const Articulo* p2){return ;}
-    }
+        bool operator()(const Pedido* p1, const Pedido* p2){return p1->numero() > p2->numero();}
+    };
 
-    typedef std::map<Articulo *, LineaPedido, OrdenaArticulos> ItemsPedido;
+    typedef std::map<Articulo*, LineaPedido, OrdenaArticulos> ItemsPedido;
+    typedef std::map<Pedido*, LineaPedido, OrdenaPedidos> Pedidos;
+
+    void pedir(Pedido& p, Articulo& art, float precio, int cantidad = 1);
+    void pedir(Articulo& art, Pedido& p, float precio, int cantidad = 1);
+
+    const ItemsPedido& detalle(Pedido& p) const {return p_a_.find(&p)->second;}
+    const Pedidos& ventas(Articulo& art) const {return a_p_.find(&art)->second;}
+
+    friend void mostrarDetallePedidos(std::ostream& os, const Pedido_Articulo& p); //QUEDA POR IMPLEMENTAR
+    friend void mostrarVentasArticulos(std::ostream& os, const Pedido_Articulo& p);
+    
 private:
-
+     std::map<Pedido*, ItemsPedido, OrdenaPedidos> p_a_;
+     std::map<Articulo*, Pedidos, OrdenaArticulos> a_p_;
 };
+
+std::ostream& operator<<(std::ostream& os, const Pedido_Articulo::ItemsPedido& ip);
+std::ostream& operator<<(std::ostream& os, const Pedido_Articulo::Pedidos& ip);
+
 
 #endif

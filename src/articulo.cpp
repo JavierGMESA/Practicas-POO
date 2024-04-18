@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include <math.h>
+#include <cmath>
 #include "articulo.hpp"
 #include "cadena.hpp"
 #include "fecha.hpp"

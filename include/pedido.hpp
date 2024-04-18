@@ -54,7 +54,7 @@ public:
     int total_pedidos() const {return Pedido::n_pedidos_;}
 
 private:
-    float  importe_;
+    float importe_;
     int numero_,;
     const Tarjeta* tar_de_pago_;
     Fecha f_pedido_;

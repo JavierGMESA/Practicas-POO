@@ -36,7 +36,7 @@ public:
         bool operator()()const {std::logical_not<int>();} //QUEDA POR IMPLEMENTAR
     };
 
-    Numero(const Cadena& num);
+    Numero(const Cadena& num); //QUEDA POR MODIFICAR
     operator const char*() const;
     friend bool operator<(const Numero& num1, const Numero& num2); //Hay que hacerlo amigo para
                                                                    //para poder acceder a las cadenas y así comparar 
