@@ -18,7 +18,7 @@ std::ostream& operator<<(std::ostream& os, const Articulo& art)
     //Pd = Pdecimal * 100;
     //std::locale localidad("");
     //os.imbue(localidad);
-    os << '[' << art.referencia() << "]" << ' ' << '"' << art.titulo() << '"' << ", " << art.f_publi().anno() << ". ";
+    os << '[' << art.referencia() << "] \"" << art.titulo()  << "\", " << art.f_publi().anno() << ". ";
     os <</* PEntera << ","  art.precio()*/ /* << " €" */ std::ceil(art.precio() * 100.0) / 100.0 << " €";
     //if(Pd == 0)
     //{

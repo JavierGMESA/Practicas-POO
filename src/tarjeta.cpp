@@ -178,7 +178,8 @@ std::ostream& operator <<(std::ostream& os, Tarjeta::Tipo t)
                     }
                     else
                     {
-                        os << "Tipo indeterminado";
+                        //os << "Tipo indeterminado";
+                        os << "Otro";
                     }
                 }
             }
