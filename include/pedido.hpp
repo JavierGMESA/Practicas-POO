@@ -55,7 +55,7 @@ public:
 
 private:
     float importe_;
-    int numero_,;
+    int numero_;
     const Tarjeta* tar_de_pago_;
     Fecha f_pedido_;
     static int n_pedidos_;

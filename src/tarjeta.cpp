@@ -14,45 +14,44 @@ Numero::Numero(const Cadena& num): numero_{num}
     char* correct_n = new char[numero_.length()];
     int i = 0, j = 0;
 
-    //for(i = 0; i < numero_.length(); ++i)
+    Cadena::iterator it = std::remove_if(numero_.begin(), numero_.end() + 1, Numero::EsBlanco()); //Hay que pasarle un objeto de la clase funcion. Le sumo 1 al end para que mueva el '\0'
+    numero_ = numero_.substr(0, it - numero_.begin()); //Le asigno una nueva cadena pues tras el remove_if el tamaño de la cadena ha quedado inexacto
 
-    //Cadena::iterator new_end = std::remove_if(numero_.begin(), numero_.end(), Numero::EsBlanco::operator());
-    //Cadena::iterator it = numero_.begin();
-    
-    //while(it != new_end && numerico)
-    while(i < numero_.length() && numerico)
-    {
-        
-        //if(!std::isdigit(*it) && !std::isspace(*it))
-        //if(it != std::find_if(it, numero_.end(), Numero::EsDigito::operator()))
-        //{
-        //    numerico = false;
-        //}
-
-        if(!std::isdigit(numero_[i]) && !std::isspace(numero_[i]))
-        {
-            numerico = false;
-        }
-        else
-        {
-            if(!std::isspace(numero_[i]))
-            {
-                correct_n[j] = numero_[i];
-                ++j;
-            }
-            ++i;
-        }   
-    }
-    correct_n[j] = '\0';
-    numero_ = Cadena(correct_n);
-
-    //numero_ = Cadena(numero_.operator const char *());
-
-    if(!numerico)
+    it = std::find_if(numero_.begin(), numero_.end(), std::not_fn(Numero::EsDigito::operator()));
+    if(it != numero_.end())
     {
         numero_ = Cadena("");
         throw Numero::Incorrecto(DIGITOS);
     }
+
+
+    //while(i < numero_.length() && numerico)
+    //{
+    //
+    //    if(!std::isdigit(numero_[i]) && !std::isspace(numero_[i]))
+    //    {
+    //        numerico = false;
+    //    }
+    //    else
+    //    {
+    //        if(!std::isspace(numero_[i]))
+    //        {
+    //            correct_n[j] = numero_[i];
+    //            ++j;
+    //        }
+    //        ++i;
+    //    }   
+    //}
+    //correct_n[j] = '\0';
+    //numero_ = Cadena(correct_n);
+
+    //numero_ = Cadena(numero_.operator const char *());
+
+    //if(!numerico)
+    //{
+    //    numero_ = Cadena("");
+    //    throw Numero::Incorrecto(DIGITOS);
+    //}
     if(numero_.length() < 13 || numero_.length() > 19)
     {
         numero_ = Cadena("");

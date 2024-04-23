@@ -13,33 +13,39 @@ std::ostream& operator<<(std::ostream& os, const LineaPedido& l)
 void Pedido_Articulo::pedir(Pedido& p, Articulo& art, float precio, int cantidad = 1)
 {
     LineaPedido lp{precio, cantidad};
-    if(p_a_.count(&p))
-    {
-        ItemsPedido& ip = p_a_[&p];
-        ip.insert(std::make_pair(&art, lp));
-    }
-    else
-    {
-        ItemsPedido ip;
-        ip[&art] = lp;
-        p_a_[&p] = ip;
-    }
+    p_a_[&p].insert(std::pair<Articulo*, LineaPedido>(&art, lp));
+    a_p_[&art].insert(std::pair<Pedido*, LineaPedido>(&p, lp));
+    //std::map<Pedido*, ItemsPedido, OrdenaPedidos>::iterator it1 = p_a_.find(&p);
+    //if(/*p_a_.count(&p)*/it1 != p_a_.end())
+    //{
+    //    //ItemsPedido& ip = p_a_[&p];
+    //    //ip.insert(std::make_pair(&art, lp));
+    //    it1->second.insert(std::make_pair(&art, lp));
+    //}
+    //else
+    //{
+    //    p_a_.insert(std::pair<Pedido*, ItemsPedido>(&p, ip));
+    //}
+
+    //std::map<Articulo*, Pedidos, OrdenaArticulos>::iterator it2 = a_p_.find(&art);
+    
+
+    //if(it2 != a_p_.end())
+    //{
+    //    Pedidos& ip = a_p_[&art];
+    //    ip.insert(std::make_pair(&p, lp));
+    //}
+    //else
+    //{
+    //    Pedidos ip;
+    //    ip[&p] = lp;
+    //    a_p_[&art] = ip;
+    //}
 }
 
 void Pedido_Articulo::pedir(Articulo& art, Pedido& p, float precio, int cantidad = 1)
 {
-    LineaPedido lp{precio, cantidad};
-    if(a_p_.count(&art))
-    {
-        Pedidos& ip = a_p_[&art];
-        ip.insert(std::make_pair(&p, lp));
-    }
-    else
-    {
-        Pedidos ip;
-        ip[&p] = lp;
-        a_p_[&art] = ip;
-    }
+    pedir(p, art, precio, cantidad);
 }
 
 std::ostream& operator<<(std::ostream& os, const Pedido_Articulo::ItemsPedido& ip)

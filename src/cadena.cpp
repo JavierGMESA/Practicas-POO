@@ -226,7 +226,7 @@ Cadena::~Cadena()
     }
 }
 
-Cadena::Cadena(Cadena&& cade): tam_{cade.tam_}, s_{cade.s_}
+Cadena::Cadena(Cadena&& cade): tam_{cade.tam_ /* std::strlen(cade.s_) */}, s_{cade.s_}
 {
     cade.s_ = Cadena::vacia;
     cade.tam_ = 0;
@@ -242,6 +242,7 @@ Cadena& Cadena::operator=(Cadena&& cade)
         }
         s_ = cade.s_;
         tam_ = cade.tam_;
+        //tam_ = std::strlen(cade.s_);
         cade.s_ = Cadena::vacia;
         cade.tam_ = 0;
     }

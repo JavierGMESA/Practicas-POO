@@ -29,16 +29,18 @@ public:
     class OrdenaArticulos
     {
     public:
-        bool operator()(const Articulo* a1, const Articulo* a2){return a1->referencia() > a2->referencia();}
+        bool operator()(Articulo* a1, Articulo* a2){return a1->referencia() < a2->referencia();}
+        //bool operator()(Articulo& a1, Articulo& a2){return a1.referencia() < a2.referencia();}
     };
     class OrdenaPedidos
     {
     public:
-        bool operator()(const Pedido* p1, const Pedido* p2){return p1->numero() > p2->numero();}
+        bool operator()(Pedido* p1, Pedido* p2){return p1->numero() < p2->numero();}
+        //bool operator()(Pedido& p1, Pedido& p2){return p1.numero() < p2.numero();}
     };
 
-    typedef std::map<Articulo*, LineaPedido, OrdenaArticulos> ItemsPedido;
-    typedef std::map<Pedido*, LineaPedido, OrdenaPedidos> Pedidos;
+    typedef std::map<Articulo*, LineaPedido, OrdenaArticulos()> ItemsPedido;
+    typedef std::map<Pedido*, LineaPedido, OrdenaPedidos()> Pedidos;
 
     void pedir(Pedido& p, Articulo& art, float precio, int cantidad = 1);
     void pedir(Articulo& art, Pedido& p, float precio, int cantidad = 1);

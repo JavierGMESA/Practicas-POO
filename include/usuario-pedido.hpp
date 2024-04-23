@@ -16,6 +16,7 @@ public:
 
     Usuario_Pedido(): pedidos_{}, usuarios_{}{}
     void asocia(Usuario& us, Pedido& p);
+    void asocia(Pedido& p, Usuario& us);
     const Pedidos& pedidos(Usuario& us){return pedidos_[&us];}
     Usuario* cliente(Pedido& p){return usuarios_[&p];}
 private:

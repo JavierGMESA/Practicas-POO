@@ -33,7 +33,7 @@ public:
     class EsDigito
     {
     public:
-        bool operator()()const {std::logical_not<int>();} //QUEDA POR IMPLEMENTAR
+        bool operator()(char* p)const {return std::isdigit(*p);} //QUEDA POR IMPLEMENTAR
     };
 
     Numero(const Cadena& num); //QUEDA POR MODIFICAR

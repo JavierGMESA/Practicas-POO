@@ -8,6 +8,9 @@
 #include <unistd.h>
 #include <cstring>
 #include <locale>
+#include <algorithm>
+#include <functional>
+#include <ctype.h>
 
 void pruebaFechaCadena();
 void pruebaArticulo();
@@ -25,6 +28,10 @@ int main()
     //pruebaClave();
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
+
+    Cadena cad{"Hola a todos"};
+    std::remove_if(cad.begin(), cad.end(), Numero::EsBlanco());
+    std::cout << cad << std::endl;
 
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;
