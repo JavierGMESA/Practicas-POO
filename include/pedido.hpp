@@ -23,28 +23,28 @@ public:
     class Vacio
     {
     public:
-        Vacio(Usuario& us): us_{&us}{}
-        Usuario* usuario() const{return us_;}
+        Vacio(Usuario& us): us_{us}{}
+        const Usuario& usuario() const{return us_;}
     private:
-        Usuario* us_;
+        const Usuario& us_; //¿ por que se debe declarar como referencia constante?
     };
 
     class Impostor
     {
     public:
-        Impostor(Usuario& us): us_{&us}{}
-        Usuario* usuario() const{return us_;}
+        Impostor(Usuario& us): us_{us}{}
+        const Usuario& usuario() const{return us_;}
     private:
-        Usuario* us_;
+        const Usuario& us_;
     };
 
     class SinStock
     {
     public:
-        SinStock(Articulo& art): art_{&art}{}
-        Articulo* articulo() const{return art_;}
+        SinStock(Articulo& art): art_{art}{}
+        const Articulo& articulo() const{return art_;}
     private:
-        Articulo* art_;
+        const Articulo& art_;
     };
 
 
@@ -54,7 +54,7 @@ public:
     const Tarjeta* tarjeta() const {return tar_de_pago_;}
     const Fecha& fecha() const {return f_pedido_;}
     float total() const {return importe_;}
-    int total_pedidos() const {return Pedido::n_pedidos_;}
+    static int n_total_pedidos() {return Pedido::n_pedidos_;}
 
 private:
     float importe_;

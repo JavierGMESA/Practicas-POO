@@ -49,8 +49,8 @@ public:
     const ItemsPedido& detalle(Pedido& p) const {return p_a_.find(&p)->second;}
     const Pedidos& ventas(Articulo& art) const {return a_p_.find(&art)->second;}
 
-    friend void mostrarDetallePedidos(std::ostream& os, const Pedido_Articulo& p);
-    friend void mostrarVentasArticulos(std::ostream& os, const Pedido_Articulo& p);
+    void mostrarDetallePedidos(std::ostream& os) const;
+    void mostrarVentasArticulos(std::ostream& os) const;
     
 private:
     std::map<Pedido*, ItemsPedido, OrdenaPedidos> p_a_;

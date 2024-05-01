@@ -73,12 +73,12 @@ std::ostream& operator<<(std::ostream& os, const Pedido_Articulo::Pedidos& ip)
     return os;
 }
 
-void mostrarDetallePedidos(std::ostream& os, const Pedido_Articulo& p)
+void Pedido_Articulo::mostrarDetallePedidos(std::ostream& os) const
 {
     std::map<Pedido*, Pedido_Articulo::ItemsPedido, Pedido_Articulo::OrdenaPedidos>::const_iterator i;
     //Usuario_Pedido us;
     float importe = 0;
-    for(i = p.p_a_.begin(); i != p.p_a_.end(); ++i)
+    for(i = p_a_.begin(); i != p_a_.end(); ++i)
     {
         os << "Pedido núm. " << (*(i->first)).numero() << std::endl;
         os << "Cliente: " << (*(i->first)).tarjeta()->titular()->nombre();
@@ -89,12 +89,12 @@ void mostrarDetallePedidos(std::ostream& os, const Pedido_Articulo& p)
     os << "TOTAL VENTAS          " << importe << " €";
 }
 
-void mostrarVentasArticulos(std::ostream& os, const Pedido_Articulo& p)
+void Pedido_Articulo::mostrarVentasArticulos(std::ostream& os) const
 {
     std::map<Articulo*, Pedido_Articulo::Pedidos, Pedido_Articulo::OrdenaArticulos>::const_iterator i;
     Pedido_Articulo::Pedidos::const_iterator j;
     float importe = 0;
-    for(i = p.a_p_.begin(); i!= p.a_p_.end(); ++i)
+    for(i = a_p_.begin(); i!= a_p_.end(); ++i)
     {
         os << "Ventas de [" << (*(i->first)).referencia() << "] " << '"' << (*(i->first)).titulo() << '"' << std::endl;
         os << i->second << std::endl;

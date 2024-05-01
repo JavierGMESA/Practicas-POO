@@ -308,12 +308,12 @@ void pruebaP3()
     std::cout << p.numero() << std::endl;
     std::cout << *(p.tarjeta()) << std::endl;
     std::cout << p.total() << std::endl;
-    std::cout << p.total_pedidos() << std::endl;
+    std::cout << Pedido::n_total_pedidos() << std::endl;
     std::cout << std::endl << p << std::endl;
 
-    mostrarDetallePedidos(std::cout, PA);
+    PA.mostrarDetallePedidos(std::cout);
     std::cout << std::endl << std::endl;
-    mostrarVentasArticulos(std::cout, PA);
+    PA.mostrarVentasArticulos(std::cout);
     std::cout << *(UP.cliente(p)) << std::endl;
     Usuario_Pedido::Pedidos::const_iterator i;
     for(i = UP.pedidos(us).begin(); i != UP.pedidos(us).end(); ++i)
