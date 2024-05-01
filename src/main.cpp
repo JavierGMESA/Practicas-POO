@@ -29,9 +29,9 @@ int main()
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
 
-    Cadena cad{"Hola a todos"};
-    std::remove_if(cad.begin(), cad.end(), Numero::EsBlanco());
-    std::cout << cad << std::endl;
+    //Cadena cad{"Hola a todos"};
+    //std::remove_if(cad.begin(), cad.end(), Numero::EsBlanco());
+    //std::cout << cad << std::endl;
 
     std::cout << std::endl << "System Pause" << std::endl;
     return 0;

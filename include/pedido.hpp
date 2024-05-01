@@ -3,12 +3,15 @@
 
 #include "cadena.hpp"
 #include "fecha.hpp"
-#include "articulo.hpp"
-#include "usuario.hpp"
+//#include "articulo.hpp"
+//#include "usuario.hpp"
+#include "tarjeta.hpp"
 #include <iostream>
 
+class Usuario;
 class Tarjeta;
-//class Articulo;
+//class Fecha;
+class Articulo;
 class Usuario_Pedido;
 class Pedido_Articulo;
 //class Usuario;

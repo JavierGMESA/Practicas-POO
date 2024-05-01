@@ -6,8 +6,8 @@
 #include <set>
 #include <iostream>
 #include <string.h>
-#include <algorithm>
-#include <functional>
+//#include <algorithm>
+//#include <functional>
 
 class Usuario;
 class Numero
@@ -27,13 +27,15 @@ public:
     class EsBlanco
     {
     public:
-        bool operator()(char* p)const {return std::isspace(*p);}
+        using argument_type = char;
+        bool operator()(char p)const {return std::isspace(p);}
     };
 
     class EsDigito
     {
     public:
-        bool operator()(char* p)const {return std::isdigit(*p);} //QUEDA POR IMPLEMENTAR
+        using argument_type = char;
+        bool operator()(char p)const {return std::isdigit(p);} //QUEDA POR IMPLEMENTAR
     };
 
     Numero(const Cadena& num); //QUEDA POR MODIFICAR

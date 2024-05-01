@@ -3,17 +3,17 @@
 #include <iomanip>
 #include <math.h>
 #include <cmath>
-#include "articulo.hpp"
 #include "cadena.hpp"
 #include "fecha.hpp"
+#include "articulo.hpp"
 
 
 Articulo::Articulo(const Cadena& Ref, const Cadena& tit, const Fecha& pub, float precio, unsigned stk): referencia_{Ref}, titulo_{tit}, f_publi_{pub}, precio_{precio}, stock_{stk} {}
 
 std::ostream& operator<<(std::ostream& os, const Articulo& art)
 {
-    float PEntera, Pdecimal;
-    int Pd;
+    //float PEntera, Pdecimal;
+    //int Pd;
     //Pdecimal = modf(art.precio(), &PEntera);
     //Pd = Pdecimal * 100;
     //std::locale localidad("");

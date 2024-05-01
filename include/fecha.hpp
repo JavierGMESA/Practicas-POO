@@ -1,6 +1,7 @@
 #ifndef FECHA_HPP_
 #define FECHA_HPP_
 #include <cstring>
+#include <iostream>
 
 class Fecha
 {

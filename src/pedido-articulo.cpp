@@ -1,7 +1,9 @@
 #include "pedido-articulo.hpp"
-#include "pedido.hpp"
-#include "articulo.hpp"
-#include "usuario-pedido.hpp"
+#include "fecha.hpp"
+//#include "pedido.hpp"
+//#include "articulo.hpp"
+//#include "tarjeta.hpp"
+//#include "usuario-pedido.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -10,7 +12,7 @@ std::ostream& operator<<(std::ostream& os, const LineaPedido& l)
     os << l.precio_venta() << " €   " << l.cantidad();
 }
 
-void Pedido_Articulo::pedir(Pedido& p, Articulo& art, float precio, int cantidad = 1)
+void Pedido_Articulo::pedir(Pedido& p, Articulo& art, float precio, int cantidad)
 {
     LineaPedido lp{precio, cantidad};
     p_a_[&p].insert(std::pair<Articulo*, LineaPedido>(&art, lp));
@@ -43,7 +45,7 @@ void Pedido_Articulo::pedir(Pedido& p, Articulo& art, float precio, int cantidad
     //}
 }
 
-void Pedido_Articulo::pedir(Articulo& art, Pedido& p, float precio, int cantidad = 1)
+void Pedido_Articulo::pedir(Articulo& art, Pedido& p, float precio, int cantidad)
 {
     pedir(p, art, precio, cantidad);
 }
@@ -104,7 +106,7 @@ void mostrarDetallePedidos(std::ostream& os, const Pedido_Articulo& p)
     for(i = p.p_a_.begin(); i != p.p_a_.end(); ++i)
     {
         os << "Pedido núm. " << (*(i->first)).numero() << std::endl;
-        //Necesito poder acceder al nombre del cliente del pedido
+        os << "Cliente: " << (*(i->first)).tarjeta()->titular() << std::endl;
         os << "          Fecha: " << (*(i->first)).fecha() << std::endl;
         os << i->second << std::endl;
         importe += (*(i->first)).total();

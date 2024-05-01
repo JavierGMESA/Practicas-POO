@@ -1,7 +1,7 @@
-#include "tarjeta.hpp"
 #include "cadena.hpp"
 #include "usuario.hpp"
 #include "fecha.hpp"
+#include "tarjeta.hpp"
 #include <ctype.h>
 #include <set>
 #include <iostream>
@@ -14,10 +14,12 @@ Numero::Numero(const Cadena& num): numero_{num}
     char* correct_n = new char[numero_.length()];
     int i = 0, j = 0;
 
-    Cadena::iterator it = std::remove_if(numero_.begin(), numero_.end() + 1, Numero::EsBlanco()); //Hay que pasarle un objeto de la clase funcion. Le sumo 1 al end para que mueva el '\0'
+    Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end() + 1, EsBlanco()); //Hay que pasarle un objeto de la clase funcion. Le sumo 1 al end para que mueva el '\0'
     numero_ = numero_.substr(0, it - numero_.begin()); //Le asigno una nueva cadena pues tras el remove_if el tamaño de la cadena ha quedado inexacto
 
-    it = std::find_if(numero_.begin(), numero_.end(), std::not_fn(Numero::EsDigito::operator()));
+    std::unary_negate<EsDigito> NoDigito((EsDigito()));
+
+    it = std::find_if(numero_.begin(), numero_.end(), NoDigito);
     if(it != numero_.end())
     {
         numero_ = Cadena("");
