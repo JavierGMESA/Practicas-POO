@@ -48,7 +48,7 @@ public:
     };
 
 
-    Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& tar, const Fecha& f = Fecha()); //POR TERMINAR
+    Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& tar, const Fecha& f = Fecha());
 
     int numero() const {return numero_;}
     const Tarjeta* tarjeta() const {return tar_de_pago_;}

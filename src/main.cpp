@@ -2,9 +2,15 @@
 
 #include "fecha.hpp"
 #include "cadena.hpp"
+
 #include "articulo.hpp"
 #include "usuario.hpp"
 #include "tarjeta.hpp"
+
+#include "pedido.hpp"
+#include "usuario-pedido.hpp"
+#include "pedido-articulo.hpp"
+
 #include <unistd.h>
 #include <cstring>
 #include <locale>
@@ -17,6 +23,7 @@ void pruebaArticulo();
 void pruebaClave();
 void pruebaNumero();
 void pruebaUsuarioTarjeta();
+void pruebaP3();
 
 //typedef basic_ostringstream<char> ostringstream;
 
@@ -28,6 +35,7 @@ int main()
     //pruebaClave();
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
+    pruebaP3();
 
     //Cadena cad{"Hola a todos"};
     //std::remove_if(cad.begin(), cad.end(), Numero::EsBlanco());
@@ -279,4 +287,37 @@ void pruebaFechaCadena()
     a += b;
     std::cout << a << ' ' << a.operator const char *() << std::endl;
     
+}
+
+void pruebaP3()
+{
+    Usuario us{"1234", "Javier", "Mesa", "Montevideo", "mamaita"};
+    std::cout << "Crea el usuario Javier" << std::endl;
+    Pedido_Articulo PA{};
+    Usuario_Pedido UP{};
+    std::cout << "Crea las clases de asociacion" << std::endl;
+    Articulo art{"alfajor", "alfajores argentinos", "10/8/1990", 11.90, 20};
+    std::cout << "Crea el Alfajor" << std::endl;
+    Tarjeta tar{Numero{"2989 0765 4329 017"}, us, "10/10/2025"};
+    std::cout << "Crea la tarjeta" << std::endl;
+    std::cout << tar.numero() << std::endl;
+    us.compra(art, 10);
+    Pedido p{UP, PA, us, tar, "0/0/0"};
+    std::cout << "Crea el pedido" << std::endl;
+    std::cout << p.fecha() << std::endl;
+    std::cout << p.numero() << std::endl;
+    std::cout << *(p.tarjeta()) << std::endl;
+    std::cout << p.total() << std::endl;
+    std::cout << p.total_pedidos() << std::endl;
+    std::cout << std::endl << p << std::endl;
+
+    mostrarDetallePedidos(std::cout, PA);
+    std::cout << std::endl << std::endl;
+    mostrarVentasArticulos(std::cout, PA);
+    std::cout << *(UP.cliente(p)) << std::endl;
+    Usuario_Pedido::Pedidos::const_iterator i;
+    for(i = UP.pedidos(us).begin(); i != UP.pedidos(us).end(); ++i)
+    {
+        std::cout << *(*i) << std::endl;
+    }
 }

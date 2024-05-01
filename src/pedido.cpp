@@ -40,14 +40,16 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& 
     {
         (*(it->first)).stock() -= it->second;
         importe_ += (*(it->first)).precio() * (it->second);
+
+        rpa.pedir(*this, (*(it->first)), (*(it->first)).precio(), it->second);
     }
     
     //Al final
     rup.asocia(us, *this);
-    for(it = art_us.begin(); it != art_us.end(); ++it)
-    {
-        //rpa.nombredelafuncion(*this, *(it->first))
-    }
+    //for(it = art_us.begin(); it != art_us.end(); ++it)
+    //{
+    //    //rpa.nombredelafuncion(*this, *(it->first))
+    //}
     Pedido::n_pedidos_ += 1;
     numero_ = Pedido::n_pedidos_;
     us.vaciar_carro();
@@ -57,7 +59,7 @@ std::ostream& operator <<(std::ostream& os, const Pedido& p)
 {
     os << "Núm. pedido: " << p.numero() << std::endl;
     os << "Fecha:       " << p.fecha() << std::endl;
-    os << "Pagado con:  " << (*(p.tarjeta())).tipo() << " n.º: " << (*(p.tarjeta())).numero();
+    os << "Pagado con:  " << (*(p.tarjeta())).tipo() << " n.º: " << (*(p.tarjeta())).numero() << std::endl;
     os << "Importe:     " << p.total() << " €";
     return os;
 }
