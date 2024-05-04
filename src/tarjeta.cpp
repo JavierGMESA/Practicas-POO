@@ -14,7 +14,7 @@ Numero::Numero(const Cadena& num): numero_{num}
     char* correct_n = new char[numero_.length()];
     int i = 0, j = 0;
 
-    Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), EsBlanco()); //Hay que pasarle un objeto de la clase funcion. Le sumo 1 al end para que mueva el '\0'
+    Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), EsBlanco());
     numero_ = numero_.substr(0, it - numero_.begin()); //Le asigno una nueva cadena pues tras el remove_if el tamaño de la cadena ha quedado inexacto
 
     std::unary_negate<EsDigito> NoDigito((EsDigito()));
@@ -30,7 +30,7 @@ Numero::Numero(const Cadena& num): numero_{num}
     //while(i < numero_.length() && numerico)
     //{
     //
-    //    if(!std::isdigit(numero_[i]) && !std::isspace(numero_[i]))
+    //    if(!std::isdigit(numero_[i]) && !std::isspace(numero_[i])) //IMPORTANTE(función isspace)
     //    {
     //        numerico = false;
     //    }
@@ -85,7 +85,7 @@ Tarjeta::Tarjeta(const Numero& num, Usuario& us, const Fecha& fech): numero_{num
         throw Tarjeta::Caducada(caduca_);
     }
     us.es_titular_de(*this);
-    std::pair<IT, bool> res = Tarjeta::tarjetas.insert(numero_);
+    std::pair<IT, bool> res = Tarjeta::tarjetas.insert(numero_); //IMPORTANTE (retorno de insert)
     if (!res.second)
         throw Num_duplicado(numero_);
 }
@@ -141,7 +141,7 @@ Tarjeta::~Tarjeta()
 {
     if(titular_ != nullptr)
     {
-        const_cast<Usuario *>(titular_)->no_es_titular_de(*this);
+        const_cast<Usuario *>(titular_)->no_es_titular_de(*this); //IMPORTANTE: const_cast pues titular_ es PUNTERO A USUARIO CONSTANTE
         titular_ = nullptr;
     }
     Tarjeta::tarjetas.erase(numero_);
@@ -199,7 +199,7 @@ std::ostream& operator<<(std::ostream& os, const Tarjeta& tar)
 
     for(i = nombre.begin(); i != nombre.end(); ++i)
     {
-        os << char(std::toupper(*i));
+        os << char(std::toupper(*i)); //IMPORTANTE: FUNCIÓN toupper
     }
     os << ' ';
     nombre = tar.titular()->apellidos();

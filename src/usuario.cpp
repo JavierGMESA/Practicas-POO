@@ -18,10 +18,10 @@
 
 Clave::Clave(const char* passwd): clave_{passwd}
 {
-    static Cadena caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"};
+    static Cadena caracteres{"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789./"}; //IMPORTANTE
     //std::srand(std::time(nullptr));
 
-    std::random_device rd;
+    std::random_device rd; //IMPORTANTE
     std::mt19937 gen(rd());
     std::uniform_int_distribution<char> distrib(0, 63);
     char * c;
@@ -71,7 +71,7 @@ void Usuario::es_titular_de(Tarjeta& tar)
     //if(!Tarjetas_.count(tar.numero_) && tar.activa_ && tar.titular_ == nullptr)
     if(tar.titular() == this)
     {
-        Tarjetas_.insert(std::make_pair(tar.numero_, &tar));
+        Tarjetas_.insert(std::make_pair(tar.numero_, &tar)); //IMPORTANTE (no hace falta especificar los tipos)
     }
     //tar.titular_ = this;
 }
