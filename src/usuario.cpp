@@ -79,6 +79,7 @@ void Usuario::es_titular_de(Tarjeta& tar)
 void Usuario::no_es_titular_de(Tarjeta& tar)
 {
     Tarjetas_.erase(tar.numero_);
+    tar.anula_titular();
 }
 
 void Usuario::compra(Articulo& art, unsigned ctd)
@@ -112,7 +113,7 @@ void mostrar_carro(std::ostream& os, const Usuario& us)
     os.width(60);
     os << "" << std::endl;
     Usuario::Articulos::const_iterator is;
-    for(is = us.compra().begin(); is != us.compra().end(); ++is) // Por que?
+    for(is = us.compra().begin(); is != us.compra().end(); ++is)
     {
         os << std::endl << "  " << is->second << "   " << *(is->first);
     }

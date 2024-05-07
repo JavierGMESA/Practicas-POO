@@ -25,6 +25,31 @@ void Usuario_Pedido::asocia(Usuario& us, Pedido& p)
     usuarios_.insert(std::pair<Pedido *, Usuario *>(&p, &us));
 }
 
+Usuario_Pedido::Pedidos Usuario_Pedido::pedidos(Usuario& us) const
+{
+    if(pedidos_.find(&us) == pedidos_.end())
+    {
+        return Usuario_Pedido::Pedidos();
+    }
+    else
+    {
+        return pedidos_.at(&us); //NO DEBO USAR [] PORQUE NO EXISTE SOBRECARGA CONST DE ESTOS
+    }
+}
+
+Usuario* Usuario_Pedido::cliente(Pedido& p) const
+{
+    if(usuarios_.find(&p) == usuarios_.end())
+    {
+        return nullptr;
+    }
+    else
+    {
+        return usuarios_.at(&p);
+    }
+}
+
+
 void Usuario_Pedido::asocia(Pedido& p, Usuario& us)
 {
     asocia(us, p);

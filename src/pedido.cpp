@@ -11,48 +11,53 @@ int Pedido::n_pedidos_{0};
 
 Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& tar, const Fecha& f): numero_{0}, importe_{0.0}, tar_de_pago_{&tar}, f_pedido_{f}
 {
+    //std::cout << tar.titular()->nombre() << ' ' << us.nombre() << std::endl;
     Usuario::Articulos art_us = us.compra();
-    if(art_us.size() == 0)
+    if(art_us.empty())
     {
         throw Pedido::Vacio(us);
     }
-    if(tar.titular() != &us)
+    else if(tar.titular() != &us)
     {
         throw Pedido::Impostor(us);
     }
-    if(tar.caducidad() < f_pedido_)
+    else if(tar.caducidad() < f_pedido_)
     {
         throw Tarjeta::Caducada(tar.caducidad());
     }
-    if(!tar.activa())
+    else if(!tar.activa())
     {
         throw Tarjeta::Desactivada();
     }
-    Usuario::Articulos::iterator it;
-    for(it = art_us.begin(); it != art_us.end(); ++it)
+    else
     {
-        if((*(it->first)).stock() < it->second)
+        Usuario::Articulos::iterator it;
+        for(it = art_us.begin(); it != art_us.end(); ++it)
         {
-            throw Pedido::SinStock(*(it->first));
+            if((*(it->first)).stock() < it->second)
+            {
+                throw Pedido::SinStock(*(it->first));
+            }
         }
-    }
-    for(it = art_us.begin(); it != art_us.end(); ++it)
-    {
-        (*(it->first)).stock() -= it->second;
-        importe_ += (*(it->first)).precio() * (it->second);
+        for(it = art_us.begin(); it != art_us.end(); ++it)
+        {
+            (*(it->first)).stock() -= it->second;
+            importe_ += (*(it->first)).precio() * (it->second);
 
-        rpa.pedir(*this, (*(it->first)), (*(it->first)).precio(), it->second);
+            rpa.pedir(*this, (*(it->first)), (*(it->first)).precio(), it->second);
+        }
+
+        //Al final
+        rup.asocia(us, *this);
+        //for(it = art_us.begin(); it != art_us.end(); ++it)
+        //{
+        //    //rpa.nombredelafuncion(*this, *(it->first))
+        //}
+        Pedido::n_pedidos_ += 1;
+        numero_ = Pedido::n_pedidos_;
+        us.vaciar_carro();
     }
     
-    //Al final
-    rup.asocia(us, *this);
-    //for(it = art_us.begin(); it != art_us.end(); ++it)
-    //{
-    //    //rpa.nombredelafuncion(*this, *(it->first))
-    //}
-    Pedido::n_pedidos_ += 1;
-    numero_ = Pedido::n_pedidos_;
-    us.vaciar_carro();
 }
 
 std::ostream& operator <<(std::ostream& os, const Pedido& p)

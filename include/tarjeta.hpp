@@ -35,10 +35,10 @@ public:
     {
     public:
         using argument_type = char;
-        bool operator()(char p)const {return std::isdigit(p);} //QUEDA POR IMPLEMENTAR
+        bool operator()(char p)const {return std::isdigit(p);}
     };
 
-    Numero(const Cadena& num); //QUEDA POR MODIFICAR
+    Numero(const Cadena& num);
     operator const char*() const;
     friend bool operator<(const Numero& num1, const Numero& num2); //Hay que hacerlo amigo para
                                                                    //para poder acceder a las cadenas y así comparar 

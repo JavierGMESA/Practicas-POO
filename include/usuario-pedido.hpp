@@ -17,8 +17,8 @@ public:
     Usuario_Pedido(): pedidos_{}, usuarios_{}{}
     void asocia(Usuario& us, Pedido& p);
     void asocia(Pedido& p, Usuario& us);
-    const Pedidos& pedidos(Usuario& us){return pedidos_[&us];}
-    Usuario* cliente(Pedido& p){return usuarios_[&p];}
+    Pedidos pedidos(Usuario& us) const; //RECORDAR QUE NO SE PUEDEN PASAR const PUES LA CLAVE DEL MAP NO ES CONSTANTE
+    Usuario* cliente(Pedido& p) const; 
 private:
     std::map<Usuario*, Pedidos> pedidos_;
     std::map<Pedido*, Usuario*> usuarios_;

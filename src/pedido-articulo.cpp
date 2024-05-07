@@ -11,7 +11,9 @@
 std::ostream& operator<<(std::ostream& os, const LineaPedido& l)
 {
     //std::ceil(l.precio_venta() * 100.0) / 100.0
-    os << std::ceil(l.precio_venta() * 100.0) / 100.0 << " €\t" << l.cantidad();
+    os << l.precio_venta()<< " €\t" << l.cantidad();
+    return os; //NO OLVIDARSE
+
 }
 
 void Pedido_Articulo::pedir(Pedido& p, Articulo& art, float precio, int cantidad)

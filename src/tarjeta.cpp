@@ -14,6 +14,12 @@ Numero::Numero(const Cadena& num): numero_{num}
     char* correct_n = new char[numero_.length()];
     int i = 0, j = 0;
 
+    if(numero_.length() < 13)
+    {
+        numero_ = Cadena("");
+        throw Numero::Incorrecto(LONGITUD);
+    }
+
     Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), EsBlanco());
     numero_ = numero_.substr(0, it - numero_.begin()); //Le asigno una nueva cadena pues tras el remove_if el tamaño de la cadena ha quedado inexacto
 

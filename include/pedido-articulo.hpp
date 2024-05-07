@@ -12,11 +12,11 @@ class Articulo;
 class LineaPedido
 {
 public:
-    explicit LineaPedido(float precio = 0.0, int cant = 1): precio_v_{precio}, cant_{cant}{}
+    explicit LineaPedido(double precio = 0.0, int cant = 1): precio_v_{precio}, cant_{cant}{}
     float precio_venta() const {return precio_v_;}
     int cantidad() const {return cant_;}
 private:
-    float precio_v_;
+    double precio_v_;
     int cant_;
 };
 
