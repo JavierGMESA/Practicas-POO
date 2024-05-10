@@ -6,65 +6,64 @@
 #include "usuario-pedido.hpp"
 #include "pedido-articulo.hpp"
 #include <iostream>
+#include <iomanip>
 
 int Pedido::n_pedidos_{0};
 
-Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, Tarjeta& tar, const Fecha& f): numero_{0}, importe_{0.0}, tar_de_pago_{&tar}, f_pedido_{f}
+Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tarjeta& tar, Fecha f): numero_{n_pedidos_ + 1}, importe_{0.0}, tarjeta_{&tar}, f_pedido_{f}
 {
-    //std::cout << tar.titular()->nombre() << ' ' << us.nombre() << std::endl;
-    Usuario::Articulos art_us = us.compra();
-    if(art_us.empty())
+    if(tar.titular() != &us)
     {
-        throw Pedido::Vacio(us);
+        throw Impostor(us);
     }
-    else if(tar.titular() != &us)
+    if(us.compra().empty())
     {
-        throw Pedido::Impostor(us);
+        throw Vacio(us);
     }
-    else if(tar.caducidad() < f_pedido_)
+    if(tar.caducidad() < f_pedido_)
     {
         throw Tarjeta::Caducada(tar.caducidad());
     }
-    else if(!tar.activa())
+    if(!tar.activa())
     {
         throw Tarjeta::Desactivada();
     }
-    else
+    //Usuario::Articulos::iterator it;
+    for(auto it: us.compra())
     {
-        Usuario::Articulos::iterator it;
-        for(it = art_us.begin(); it != art_us.end(); ++it)
+        if(it.first->stock() < it.second)
         {
-            if((*(it->first)).stock() < it->second)
-            {
-                throw Pedido::SinStock(*(it->first));
-            }
+            us.vaciar_carro();
+            throw SinStock(*(it.first));
         }
-        for(it = art_us.begin(); it != art_us.end(); ++it)
-        {
-            (*(it->first)).stock() -= it->second;
-            importe_ += (*(it->first)).precio() * (it->second);
-
-            rpa.pedir(*this, (*(it->first)), (*(it->first)).precio(), it->second);
-        }
-
-        //Al final
-        rup.asocia(us, *this);
-        //for(it = art_us.begin(); it != art_us.end(); ++it)
-        //{
-        //    //rpa.nombredelafuncion(*this, *(it->first))
-        //}
-        Pedido::n_pedidos_ += 1;
-        numero_ = Pedido::n_pedidos_;
-        us.vaciar_carro();
     }
+    for(auto it: us.compra())
+    {
+        it.first->stock() -= it.second;
+        importe_ += it.first->precio() * it.second;
+        rpa.pedir(*this, (*(it.first)), it.first->precio(), it.second);
+    }
+    Pedido::n_pedidos_ += 1;
+    rup.asocia(us, *this);
+    us.vaciar_carro();
     
 }
 
 std::ostream& operator <<(std::ostream& os, const Pedido& p)
 {
+    os << std::endl;
     os << "Núm. pedido: " << p.numero() << std::endl;
     os << "Fecha:       " << p.fecha() << std::endl;
-    os << "Pagado con:  " << (*(p.tarjeta())).tipo() << " n.º: " << (*(p.tarjeta())).numero() << std::endl;
-    os << "Importe:     " << p.total() << " €";
+    if(p.tarjeta()->tipo() == Tarjeta::Tipo::Otro)
+    {
+        os << "Pagado con: Tipo indeterminado";
+    }
+    else
+    {
+        os << "Pagado con: " << p.tarjeta()->tipo();
+    }
+    os << " nº: " << p.tarjeta()->numero() << std::endl;
+    os << "Importe: ";
+    os << std::fixed << std::setprecision(2) << p.total() << " €" << std::endl;
     return os;
 }

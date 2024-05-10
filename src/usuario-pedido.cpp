@@ -13,7 +13,7 @@ void Usuario_Pedido::asocia(Usuario& us, Pedido& p)
     if(/*!pedidos_.count(&us)*/ it == pedidos_.end())
     {
         ped.insert(&p);
-        pedidos_.insert(std::pair<Usuario*, Pedidos>(&us, ped));
+        pedidos_.insert(std::make_pair(&us, ped));
     }
     else
     {
@@ -22,7 +22,7 @@ void Usuario_Pedido::asocia(Usuario& us, Pedido& p)
         //pedidos_[&us] = ped;
     }
 
-    usuarios_.insert(std::pair<Pedido *, Usuario *>(&p, &us));
+    usuarios_.insert(std::pair<Pedido *, Usuario *>(&p, &us)); //sería mejor un make_pair
 }
 
 Usuario_Pedido::Pedidos Usuario_Pedido::pedidos(Usuario& us) const

@@ -12,29 +12,7 @@ Articulo::Articulo(const Cadena& Ref, const Cadena& tit, const Fecha& pub, float
 
 std::ostream& operator<<(std::ostream& os, const Articulo& art)
 {
-    //float PEntera, Pdecimal;
-    //int Pd;
-    //Pdecimal = modf(art.precio(), &PEntera);
-    //Pd = Pdecimal * 100;
-    //std::locale localidad("");
-    //os.imbue(localidad);
     os << '[' << art.referencia() << "] \"" << art.titulo()  << "\", " << art.f_publi().anno() << ". ";
-    os <</* PEntera << ","  art.precio()*/ /* << " €" */ std::ceil(art.precio() * 100.0) / 100.0 << " €";
-    //if(Pd == 0)
-    //{
-    //    os << "00";
-    //}
-    //else
-    //{
-    //    if(Pd < 10)
-    //    {
-    //        os << '0' << Pd;
-    //    }
-    //    else
-    //    {
-    //        os  << Pd;
-    //    }
-    //}
-    //os << " €";
+    os << std::fixed << std::setprecision(2) << art.precio() << " €";
     return os;
 }
