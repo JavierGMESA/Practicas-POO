@@ -31,18 +31,40 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tar
     //Usuario::Articulos::iterator it;
     for(auto it: us.compra())
     {
-        if(it.first->stock() < it.second)
+        ArticuloAlmacenable *p = dynamic_cast<ArticuloAlmacenable*>(it.first);
+        if(p != nullptr)
         {
-            us.vaciar_carro();
-            throw SinStock(*(it.first));
+            if(p->stock() < it.second)
+            {
+                us.vaciar_carro();
+                throw SinStock(*(it.first));
+            }
         }
     }
     for(auto it: us.compra())
     {
-        it.first->stock() -= it.second;
-        importe_ += it.first->precio() * it.second;
-        rpa.pedir(*this, (*(it.first)), it.first->precio(), it.second);
+
+        ArticuloAlmacenable *p = dynamic_cast<ArticuloAlmacenable*>(it.first);
+        if(p == nullptr)
+        {
+            LibroDigital *l = dynamic_cast<LibroDigital*>(it.first);
+
+            if(l == nullptr) std::cout << "Mal" << std::endl << std::endl;
+
+            if(l->f_expir() >= Fecha())
+            {
+                importe_ += it.first->precio() * it.second;
+                rpa.pedir(*this, (*(it.first)), it.first->precio(), it.second);
+            }
+        }
+        else
+        {
+            p->stock() -= it.second;
+            importe_ += it.first->precio() * it.second;
+            rpa.pedir(*this, (*(it.first)), it.first->precio(), it.second);
+        }
     }
+
     Pedido::n_pedidos_ += 1;
     rup.asocia(us, *this);
     us.vaciar_carro();

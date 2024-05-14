@@ -24,6 +24,7 @@ void pruebaClave();
 void pruebaNumero();
 void pruebaUsuarioTarjeta();
 void pruebaP3();
+void pruebaP4();
 
 //typedef basic_ostringstream<char> ostringstream;
 
@@ -35,7 +36,8 @@ int main()
     //pruebaClave();
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
-    pruebaP3();
+    //pruebaP3();
+    pruebaP4();
 
     //Cadena cad{"Hola a todos"};
     //std::remove_if(cad.begin(), cad.end(), Numero::EsBlanco());
@@ -50,8 +52,8 @@ void pruebaArticulo()
     std::cout << "Va a comenzar" << std::endl;
     try
     {
-        Articulo a1("JJ", "Alfajor", "15/8/2023", 99.109, 100);
-        std::cout << a1 << std::endl;
+        //Articulo a1("JJ", "Alfajor", "15/8/2023", 99.109, 100);
+        //std::cout << a1 << std::endl;
     }
     catch(...)
     {
@@ -112,15 +114,15 @@ void pruebaUsuarioTarjeta()
     {
         
         std::cout << us1.id() << ' ' << us1.nombre() << ' ' << us1.apellidos() << ' ' << us1.direccion() << std::endl;
-        Articulo a1("JJ", "Alfajor", "15/8/2023", 99.19, 100);
-        Articulo a2("Jg", "Camas de seda", "17/8/2023", 99.19, 90);
-        us1.compra(a1, 7);
-        us1.compra(a2, 10);
+        //Articulo a1("JJ", "Alfajor", "15/8/2023", 99.19, 100);
+        //Articulo a2("Jg", "Camas de seda", "17/8/2023", 99.19, 90);
+        //us1.compra(a1, 7);
+        //us1.compra(a2, 10);
         //us1.vaciar_carro();
         Usuario::Articulos::const_iterator i;
         for(i = us1.compra().begin(); i != us1.compra().end(); ++i)
         {
-            std::cout << *(i->first) << std::endl;
+            //std::cout << *(i->first) << std::endl;
         }
         std::cout << us1.n_articulos() << std::endl;
         std::cout << us1 << std::endl; 
@@ -296,12 +298,12 @@ void pruebaP3()
     Pedido_Articulo PA{};
     Usuario_Pedido UP{};
     std::cout << "Crea las clases de asociacion" << std::endl;
-    Articulo art{"alfajor", "alfajores argentinos", "10/8/1990", 11.90, 20};
+    //Articulo art{"alfajor", "alfajores argentinos", "10/8/1990", 11.90, 20};
     std::cout << "Crea el Alfajor" << std::endl;
     Tarjeta tar{Numero{"2989 0765 4329 017"}, us, "10/10/2025"};
     std::cout << "Crea la tarjeta" << std::endl;
     std::cout << tar.numero() << std::endl;
-    us.compra(art, 10);
+    //us.compra(art, 10);
     Pedido p{UP, PA, us, tar, "0/0/0"};
     std::cout << "Crea el pedido" << std::endl;
     std::cout << p.fecha() << std::endl;
@@ -320,4 +322,31 @@ void pruebaP3()
     {
         std::cout << *(*i) << std::endl;
     }
+}
+
+void pruebaP4()
+{
+    Autor a1("Javier", "García Mesa", "Montevideo");
+    Autor a2("Larry", "Capinga", "Valdezorras");
+    Articulo::Autores a;
+    a.insert(&a1);
+    a.insert(&a2);
+    Articulo *ap = new Libro(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, 11, 10);
+    std::cout << ap << std::endl;
+    delete ap;
+    ap = new Revista(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, 11, 30, 8);
+    std::cout << ap << std::endl;
+    delete ap;
+    ap = new LibroDigital(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, "20/12/2030");
+    std::cout << ap << std::endl;
+    delete ap;
+
+    Usuario us{"1234", "Javier", "Mesa", "Montevideo", "mamaita"};
+    us.compra(*ap, 10);
+    mostrar_carro(std::cout, us);
+    Pedido_Articulo PA{};
+    Usuario_Pedido UP{};
+    Tarjeta tar{Numero{"2989 0765 4329 017"}, us, "10/10/2025"};
+    Pedido p(UP, PA, us, tar, Fecha());
+    std::cout << p << std::endl;
 }

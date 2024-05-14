@@ -115,7 +115,8 @@ void mostrar_carro(std::ostream& os, const Usuario& us)
     Usuario::Articulos::const_iterator is;
     for(is = us.compra().begin(); is != us.compra().end(); ++is)
     {
-        os << std::endl << "  " << is->second << "   " << *(is->first);
+        os << std::endl << "  " << is->second << "   " /*<< *(is->first)*/;
+        is->first->impresion_especifica(os);
     }
     os << std::endl;
 }
