@@ -69,6 +69,7 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tar
     }
     if(vacio)
     {
+        us.vaciar_carro();
         throw Vacio(us);
     }
 

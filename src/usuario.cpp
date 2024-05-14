@@ -112,11 +112,11 @@ void mostrar_carro(std::ostream& os, const Usuario& us)
     os.fill('=');
     os.width(60);
     os << "" << std::endl;
-    Usuario::Articulos::const_iterator is;
-    for(is = us.compra().begin(); is != us.compra().end(); ++is)
+    //Usuario::Articulos::const_iterator is;
+    for(/*is = us.compra().begin(); is != us.compra().end(); ++is*/ auto is: us.compra())
     {
-        os << std::endl << "  " << is->second << "   " /*<< *(is->first)*/;
-        is->first->impresion_especifica(os);
+        os << std::endl << "  " << is.second << "   " << *(is.first);
+        //(is.first)->impresion_especifica(os);
     }
     os << std::endl;
 }

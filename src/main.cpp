@@ -327,7 +327,7 @@ void pruebaP3()
 void pruebaP4()
 {
     Autor a1("Javier", "García Mesa", "Montevideo");
-    Autor a2("Larry", "Capinga", "Valdezorras");
+    Autor a2("Larry", "Martinez", "Fuerteventura");
     Articulo::Autores a;
     a.insert(&a1);
     a.insert(&a2);
@@ -339,10 +339,11 @@ void pruebaP4()
     delete ap;
     ap = new LibroDigital(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, "20/12/2030");
     std::cout << *ap << std::endl;
-    delete ap;
+    //delete ap;
 
     Usuario us{"1234", "Javier", "Mesa", "Montevideo", "mamaita"};
     us.compra(*ap, 10);
+    std::cout << std::endl << *(us.compra().begin()->first) << std::endl;
     mostrar_carro(std::cout, us);
     std::cout << std::endl << "Termina de mostrar el carro" << std::endl;
     Pedido_Articulo PA{};
