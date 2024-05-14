@@ -12,6 +12,7 @@ int Pedido::n_pedidos_{0};
 
 Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tarjeta& tar, Fecha f): numero_{n_pedidos_ + 1}, importe_{0.0}, tarjeta_{&tar}, f_pedido_{f}
 {
+    bool vacio = true;
     if(tar.titular() != &us)
     {
         throw Impostor(us);
@@ -49,12 +50,13 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tar
         {
             LibroDigital *l = dynamic_cast<LibroDigital*>(it.first);
 
-            if(l == nullptr) std::cout << "Mal" << std::endl << std::endl;
+            //if(l == nullptr) std::cout << "Mal" << std::endl << std::endl;
 
             if(l->f_expir() >= Fecha())
             {
                 importe_ += it.first->precio() * it.second;
                 rpa.pedir(*this, (*(it.first)), it.first->precio(), it.second);
+                vacio = false;
             }
         }
         else
@@ -62,7 +64,12 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tar
             p->stock() -= it.second;
             importe_ += it.first->precio() * it.second;
             rpa.pedir(*this, (*(it.first)), it.first->precio(), it.second);
+            vacio = false;
         }
+    }
+    if(vacio)
+    {
+        throw Vacio(us);
     }
 
     Pedido::n_pedidos_ += 1;

@@ -29,7 +29,7 @@ public:
     int numero() const {return numero_;}
     const Tarjeta* tarjeta() const {return tarjeta_;}
     const Fecha& fecha() const {return f_pedido_;}
-    float total() const {return importe_;}
+    double total() const {return importe_;}
     static int n_total_pedidos() {return Pedido::n_pedidos_;}
 
 private:

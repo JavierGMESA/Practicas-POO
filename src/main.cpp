@@ -332,18 +332,19 @@ void pruebaP4()
     a.insert(&a1);
     a.insert(&a2);
     Articulo *ap = new Libro(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, 11, 10);
-    std::cout << ap << std::endl;
+    std::cout << *ap << std::endl;
     delete ap;
     ap = new Revista(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, 11, 30, 8);
-    std::cout << ap << std::endl;
+    std::cout << *ap << std::endl;
     delete ap;
     ap = new LibroDigital(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, "20/12/2030");
-    std::cout << ap << std::endl;
+    std::cout << *ap << std::endl;
     delete ap;
 
     Usuario us{"1234", "Javier", "Mesa", "Montevideo", "mamaita"};
     us.compra(*ap, 10);
     mostrar_carro(std::cout, us);
+    std::cout << std::endl << "Termina de mostrar el carro" << std::endl;
     Pedido_Articulo PA{};
     Usuario_Pedido UP{};
     Tarjeta tar{Numero{"2989 0765 4329 017"}, us, "10/10/2025"};
