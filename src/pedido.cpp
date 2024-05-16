@@ -49,9 +49,6 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tar
         if(p == nullptr)
         {
             LibroDigital *l = dynamic_cast<LibroDigital*>(it.first);
-
-            //if(l == nullptr) std::cout << "Mal" << std::endl << std::endl;
-
             if(l->f_expir() >= Fecha())
             {
                 importe_ += it.first->precio() * it.second;
@@ -67,7 +64,7 @@ Pedido::Pedido(Usuario_Pedido& rup, Pedido_Articulo& rpa, Usuario& us, const Tar
             vacio = false;
         }
     }
-    if(vacio)
+    if(vacio) //Más fácil poner importe == 0
     {
         us.vaciar_carro();
         throw Vacio(us);

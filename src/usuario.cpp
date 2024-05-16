@@ -9,6 +9,7 @@
 #include <random>
 #include <crypt.h>
 #include <random>
+#include <iomanip>
 #include <ctime>
 #include <iostream>
 #include <unistd.h>
@@ -111,12 +112,13 @@ void mostrar_carro(std::ostream& os, const Usuario& us)
     //int i;
     os.fill('=');
     os.width(60);
-    os << "" << std::endl;
-    //Usuario::Articulos::const_iterator is;
-    for(/*is = us.compra().begin(); is != us.compra().end(); ++is*/ auto is: us.compra())
+    os << "";
+    os << std::endl;
+    for(auto is: us.compra())
     {
-        os << std::endl << "  " << is.second << "   " << *(is.first);
-        //(is.first)->impresion_especifica(os);
+        os << "  " << is.second << "   ";
+        os << "[" << is.first->referencia() << "] \"" << is.first->titulo() << "\", ";//de ";
+        os << is.first->f_publi().anno() << ". " << std::fixed << std::setprecision(2) << is.first->precio() << " €" << std::endl;
     }
     os << std::endl;
 }
