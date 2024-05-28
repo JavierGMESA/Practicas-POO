@@ -24,7 +24,7 @@ public:
         Razon razon_;
     };
 
-    class EsBlanco
+    class EsBlanco //CLASE FUNCIÓN
     {
     public:
         using argument_type = char;
