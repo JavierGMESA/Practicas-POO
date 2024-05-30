@@ -20,14 +20,14 @@ Numero::Numero(const Cadena& num): numero_{num}
         throw Numero::Incorrecto(LONGITUD);
     }
 
-    Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), EsBlanco());
+    Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), EsBlanco()); //IMPORTANTE
 
-    //Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), [](char c) { return c == ' '} VERSIÓN CON FUNCIONES LAMBDA
+    //Cadena::const_iterator it = std::remove_if(numero_.begin(), numero_.end(), [](char c) { return c == ' '}); VERSIÓN CON FUNCIONES LAMBDA
 
 
     numero_ = numero_.substr(0, it - numero_.begin()); //Le asigno una nueva cadena pues tras el remove_if el tamaño de la cadena ha quedado inexacto
 
-    std::unary_negate<EsDigito> NoDigito((EsDigito()));
+    std::unary_negate<EsDigito> NoDigito((EsDigito())); //IMPORTANTE
 
     it = std::find_if(numero_.begin(), numero_.end(), NoDigito);
     if(it != numero_.end())
