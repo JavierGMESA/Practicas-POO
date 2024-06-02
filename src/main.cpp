@@ -25,6 +25,7 @@ void pruebaNumero();
 void pruebaUsuarioTarjeta();
 void pruebaP3();
 void pruebaP4();
+void prueba_Polimorfismo();
 
 //typedef basic_ostringstream<char> ostringstream;
 
@@ -37,7 +38,8 @@ int main()
     //pruebaNumero();
     //pruebaUsuarioTarjeta();
     //pruebaP3();
-    pruebaP4();
+    //pruebaP4();
+    prueba_Polimorfismo();
 
     //Cadena cad{"Hola a todos"};
     //std::remove_if(cad.begin(), cad.end(), Numero::EsBlanco());
@@ -351,4 +353,19 @@ void pruebaP4()
     Tarjeta tar{Numero{"2989 0765 4329 017"}, us, "10/10/2025"};
     Pedido p(UP, PA, us, tar, Fecha());
     std::cout << p << std::endl;
+}
+
+void prueba_Polimorfismo()
+{
+    Autor a1("Javier", "García Mesa", "Montevideo");
+    Autor a2("Larry", "Martinez", "Fuerteventura");
+    Articulo::Autores a;
+    a.insert(&a1);
+    a.insert(&a2);
+    Articulo *pb = new Revista(a, "alfajor", "alfajores argentinos", "10/8/1990", 11.90, 11, 30, 8);
+
+    //std::cout << pb->numero() << std::endl; NO SE PUEDE PUES ES PUNTERO A LA BASE Y SOLO ACCEDERA DE LA DERIVADA LOS MÉTODOS ABSTRACTOS Y POLIMÓRFICOS
+
+    Revista *pd = dynamic_cast<Revista*>(pb);
+    std::cout << pd->numero() << std::endl;
 }
