@@ -368,4 +368,10 @@ void prueba_Polimorfismo()
 
     Revista *pd = dynamic_cast<Revista*>(pb);
     std::cout << pd->numero() << std::endl;
+
+
+    std::map<char, int> mapa;
+    mapa.insert(std::make_pair('b', 10));
+    const std::map<char, int> mapa_c = mapa;
+    //mapa_c['b'] = 10;
 }
